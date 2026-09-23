@@ -3,28 +3,28 @@
 /*
  * Design tokens.
  *
- * A deliberately small palette: warm off-white, charcoal, deep muted green and
- * a clay accent. Tailwind's default colors, larger radii and shadows are
- * cleared so everything in the UI comes from this list. All text pairings
- * meet WCAG AA contrast.
+ * Modern, vibrant palette: clean light canvas, deep charcoal, vibrant emerald green,
+ * and a bold coral accent. Tailwind's default colors, larger radii and shadows are
+ * cleared so everything in the UI comes from this list. All text pairings meet
+ * WCAG AA contrast.
  */
 @theme {
   --color-*: initial;
   --color-white: #ffffff;
-  --color-canvas: #f5f2ec; /* page background */
-  --color-surface: #fbfaf7; /* raised panels, nav, inputs */
-  --color-subtle: #ece7df; /* quiet fills, hover states */
-  --color-line: #dcd4c7; /* dividers and borders */
-  --color-control: #8a8378; /* form control borders (3:1 against surfaces) */
-  --color-ink: #1e2023; /* charcoal: primary text */
-  --color-ink-muted: #5a5d61; /* secondary text */
-  --color-brand: #2e4a3e; /* deep muted green */
-  --color-brand-strong: #223a30;
-  --color-brand-soft: #e2e8e3;
-  --color-on-brand-muted: #c5d0c8; /* secondary text on brand/ink backgrounds */
-  --color-accent: #a9573a; /* muted clay */
-  --color-accent-strong: #8e4830;
-  --color-accent-soft: #f2e3da;
+  --color-canvas: #faf9f7; /* page background - slightly cleaner than before */
+  --color-surface: #fcfbfa; /* raised panels, nav, inputs */
+  --color-subtle: #f0eeeb; /* quiet fills, hover states */
+  --color-line: #e8e4df; /* dividers and borders */
+  --color-control: #9d9892; /* form control borders (3:1 against surfaces) */
+  --color-ink: #121416; /* deep charcoal: primary text */
+  --color-ink-muted: #6b6f74; /* secondary text */
+  --color-brand: #1b7a52; /* vibrant emerald green */
+  --color-brand-strong: #135a3f;
+  --color-brand-soft: #e0f2eb;
+  --color-on-brand-muted: #a8d4c7; /* secondary text on brand/ink backgrounds */
+  --color-accent: #f25c3d; /* modern vibrant coral - bold and energetic */
+  --color-accent-strong: #d9462f;
+  --color-accent-soft: #fee7dd;
 
   --radius-*: initial;
   --radius-sm: 0.25rem;
