@@ -1,41 +1,48 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
 import { ArrowRight, Phone } from "lucide-react";
-import { ButtonLink, buttonStyles } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { siteConfig } from "@/config/site";
+import { RoofingAdvisorModal } from "@/components/roofing-advisor/RoofingAdvisorModal";
 
 export function FinalCtaSection() {
+  const [showAdvisor, setShowAdvisor] = useState(false);
+
   return (
-    <section
-      aria-labelledby="final-cta-heading"
-      className="on-dark bg-brand text-canvas"
-    >
-      <Container className="py-20 lg:py-28">
-        <div className="max-w-3xl">
-          <h2
-            id="final-cta-heading"
-            className="font-display text-4xl font-extrabold uppercase sm:text-5xl lg:text-6xl"
-          >
-            Tell us what’s going on with your roof.
+    <>
+      <section className="py-20 lg:py-28 bg-brand text-white">
+        <Container className="max-w-4xl text-center">
+          <h2 className="text-4xl lg:text-6xl font-semibold mb-8 leading-tight">
+            Ready to find out what your roof needs?
           </h2>
-          <p className="mt-5 max-w-xl text-lg text-on-brand-muted">
-            Start the assessment online or give us a call. Either way, our team
-            will help you figure out the next step.
+
+          <p className="text-lg lg:text-xl text-white/90 mb-12 max-w-2xl mx-auto">
+            Tell us what's happening and we'll help you figure out the next step.
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <ButtonLink href="/#assessment" variant="accent" size="lg">
-              Get My Roof Assessment
-              <ArrowRight aria-hidden="true" className="size-4" />
-            </ButtonLink>
-            <a
-              href={siteConfig.phone.href}
-              className={buttonStyles({ variant: "inverse-outline", size: "lg" })}
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={() => setShowAdvisor(true)}
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-white font-semibold rounded-lg hover:bg-accent-strong transition-colors"
             >
-              <Phone aria-hidden="true" className="size-4" />
+              Get My Roof Assessment
+              <ArrowRight className="w-5 h-5" />
+            </button>
+            <Link
+              href="tel:+15551234567"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/20 text-white font-semibold rounded-lg hover:bg-white/30 transition-colors border border-white/30"
+            >
+              <Phone className="w-5 h-5" />
               Call Us
-            </a>
+            </Link>
           </div>
-        </div>
-      </Container>
-    </section>
+        </Container>
+      </section>
+
+      {showAdvisor && (
+        <RoofingAdvisorModal onClose={() => setShowAdvisor(false)} />
+      )}
+    </>
   );
 }
