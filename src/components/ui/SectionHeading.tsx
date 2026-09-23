@@ -16,7 +16,7 @@ export function Eyebrow({
     <p
       className={cn(
         "text-xs font-semibold tracking-eyebrow uppercase",
-        tone === "inverse" ? "text-on-brand-muted" : "text-accent",
+        tone === "inverse" ? "text-accent" : "text-accent",
         className,
       )}
     >
