@@ -25,7 +25,7 @@ const steps = [
 
 export function HowItWorksSection() {
   return (
-    <section className="py-20 lg:py-28 bg-white">
+    <section id="how-it-works" className="py-20 lg:py-28 bg-white scroll-mt-20">
       <Container className="max-w-6xl">
         <div className="mb-16 lg:mb-20">
           <h2 className="text-4xl lg:text-5xl font-semibold text-ink mb-6">

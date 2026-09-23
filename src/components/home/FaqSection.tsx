@@ -31,7 +31,7 @@ export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-20 lg:py-28 bg-subtle">
+    <section id="faq" className="py-20 lg:py-28 bg-subtle scroll-mt-20">
       <Container className="max-w-3xl">
         <div className="mb-16 lg:mb-20">
           <h2 className="text-4xl lg:text-5xl font-semibold text-ink mb-6">

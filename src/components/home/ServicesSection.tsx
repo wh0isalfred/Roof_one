@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Container } from "@/components/ui/Container";
 import { ServiceDetail } from "./ServiceDetail";
-import { X } from "lucide-react";
 
 const services = [
   {
@@ -34,7 +33,7 @@ export function ServicesSection() {
 
   return (
     <>
-      <section className="py-20 lg:py-28 bg-white">
+      <section id="services" className="py-20 lg:py-28 bg-white scroll-mt-20">
         <Container className="max-w-6xl">
           <div className="mb-16 lg:mb-20">
             <h2 className="text-4xl lg:text-5xl font-semibold text-ink mb-6">

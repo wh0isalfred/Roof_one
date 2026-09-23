@@ -36,7 +36,7 @@ export function ProjectsSection() {
   const otherProjects = projects.slice(1);
 
   return (
-    <section className="py-20 lg:py-28 bg-subtle">
+    <section id="projects" className="py-20 lg:py-28 bg-subtle scroll-mt-20">
       <Container className="max-w-6xl">
         <div className="mb-16 lg:mb-20">
           <h2 className="text-4xl lg:text-5xl font-semibold text-ink mb-6">
