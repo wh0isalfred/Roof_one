@@ -3,28 +3,28 @@
 /*
  * Design tokens.
  *
- * Modern, vibrant palette: clean light canvas, deep charcoal, vibrant emerald green,
- * and a bold coral accent. Tailwind's default colors, larger radii and shadows are
- * cleared so everything in the UI comes from this list. All text pairings meet
- * WCAG AA contrast.
+ * Palette: Deep Slate primary dark, restrained Roof Accent, and warm off-white surfaces.
+ * All text pairings meet WCAG AA contrast.
  */
 @theme {
   --color-*: initial;
   --color-white: #ffffff;
-  --color-canvas: #faf9f7; /* page background - slightly cleaner than before */
-  --color-surface: #fcfbfa; /* raised panels, nav, inputs */
-  --color-subtle: #f0eeeb; /* quiet fills, hover states */
-  --color-line: #e8e4df; /* dividers and borders */
-  --color-control: #9d9892; /* form control borders (3:1 against surfaces) */
-  --color-ink: #121416; /* deep charcoal: primary text */
-  --color-ink-muted: #6b6f74; /* secondary text */
-  --color-brand: #1b7a52; /* vibrant emerald green */
-  --color-brand-strong: #135a3f;
-  --color-brand-soft: #e0f2eb;
-  --color-on-brand-muted: #a8d4c7; /* secondary text on brand/ink backgrounds */
-  --color-accent: #f25c3d; /* modern vibrant coral - bold and energetic */
-  --color-accent-strong: #d9462f;
-  --color-accent-soft: #fee7dd;
+  --color-canvas: #F7F6F2; /* Off White - main page background */
+  --color-surface: #FCFBF8; /* Warm White - cards, forms, elevated surfaces */
+  --color-subtle: #E8E6E0; /* Soft Stone - quiet fills, hover states */
+  --color-line: #E8E6E0; /* Soft Stone - dividers and borders */
+  --color-control: #B8B8B0; /* Mid Stone - form control borders */
+  --color-ink: #171D21; /* Charcoal - high-emphasis body/headline text */
+  --color-ink-muted: #B8B8B0; /* Mid Stone - secondary text / metadata */
+  --color-brand: #1E2B33; /* Deep Slate - primary brand, dark sections, nav */
+  --color-brand-strong: #2D3A41; /* Slate 2 - hover states, secondary dark */
+  --color-brand-soft: #F7F6F2; /* Off White - light variant of brand */
+  --color-on-brand-muted: #B8B8B0; /* Mid Stone - secondary text on dark backgrounds */
+  --color-accent: #A87952; /* Roof Accent - restrained warm accent */
+  --color-accent-strong: #8B6345;
+  --color-accent-soft: #F0E8E0;
+  --color-success: #52705B; /* Positive/status states */
+  --color-danger: #A5534B; /* Urgent/error states */
 
   --radius-*: initial;
   --radius-sm: 0.25rem;
@@ -105,4 +105,20 @@
 /* Resets the focus ring for light surfaces placed inside a dark section. */
 @utility on-light {
   --focus-ring: var(--color-ink);
+}
+
+/* Custom animation for rotating badge text ring */
+@layer utilities {
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 20s linear infinite;
+  }
 }
