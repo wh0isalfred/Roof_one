@@ -14,7 +14,7 @@ export function AdvisorMessage({ title, helper, ref }: AdvisorMessageProps) {
       <h3
         ref={ref}
         tabIndex={-1}
-        className="font-display text-2xl font-bold tracking-tight outline-none sm:text-3xl"
+        className="font-headline text-2xl leading-tight outline-none sm:text-3xl"
       >
         {title}
       </h3>

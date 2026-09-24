@@ -38,10 +38,10 @@ export function ServiceDetail({
       {service && (
         <>
           <div className="on-dark relative isolate flex h-44 items-end px-6 pb-6 text-white sm:h-52 sm:px-8">
-            <RoofPhoto crop={service.crop} sizes="(min-width: 640px) 42rem, 100vw" className="-z-10" />
+            <RoofPhoto src={service.photo} crop={service.crop} sizes="(min-width: 640px) 42rem, 100vw" className="-z-10" />
             <h2
               id="service-detail-title"
-              className="text-3xl font-bold tracking-tight uppercase"
+              className="font-headline text-3xl"
             >
               {service.title}
             </h2>
@@ -58,9 +58,7 @@ export function ServiceDetail({
           <div className="px-6 py-7 sm:px-8 sm:py-8">
             <p className="text-lg leading-relaxed text-ink-muted">{service.summary}</p>
 
-            <h3 className="mt-8 text-xs font-semibold tracking-eyebrow text-brand uppercase">
-              What we help with
-            </h3>
+            <h3 className="mt-8 font-semibold">What this covers</h3>
             <ul className="mt-4 grid gap-3 sm:grid-cols-2">
               {service.helpsWith.map((item) => (
                 <li key={item} className="flex gap-3">
@@ -71,7 +69,8 @@ export function ServiceDetail({
             </ul>
 
             <div className="mt-8 border-t border-line pt-7">
-              <p className="font-semibold">Not sure what you need?</p>
+              <p className="font-semibold">Not sure this is your problem?</p>
+              <p className="mt-1 text-sm text-ink-muted">Describe what you’re seeing and we’ll work it out.</p>
               <div className="mt-4 flex flex-col gap-3 sm:flex-row">
                 <button
                   type="button"
@@ -82,7 +81,7 @@ export function ServiceDetail({
                   }}
                   className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-brand px-6 font-semibold text-white transition-colors hover:bg-brand-strong"
                 >
-                  Talk to our Roofing Advisor
+                  Get a roof assessment
                   <ArrowRight aria-hidden="true" className="size-4" />
                 </button>
                 <a

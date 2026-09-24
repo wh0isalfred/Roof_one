@@ -1,19 +1,17 @@
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import heroImage from "@/assets/heroImage.jpg";
 import { cn } from "@/lib/cn";
 
-/**
- * The site's roofing photography with the navy grade used across the page.
- * Every slot uses the one supplied photo for now; `crop` frames a different
- * part of it. Swap `src` per slot once more photography is available.
- */
+/** Roofing photography with the navy grade used across the page. */
 export function RoofPhoto({
+  src = heroImage,
   crop,
   tone = "strong",
   priority = false,
   sizes,
   className,
 }: {
+  src?: StaticImageData;
   /** Tailwind classes that frame the image, e.g. object position and scale. */
   crop?: string;
   tone?: "strong" | "soft";
@@ -24,7 +22,7 @@ export function RoofPhoto({
   return (
     <div aria-hidden="true" className={cn("absolute inset-0 overflow-hidden bg-brand-strong", className)}>
       <Image
-        src={heroImage}
+        src={src}
         alt=""
         fill
         priority={priority}

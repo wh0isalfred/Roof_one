@@ -72,14 +72,9 @@ export function AdvisorProvider({ children }: { children: ReactNode }) {
       >
         <div className="flex h-full max-h-[inherit] flex-col">
           <div className="flex items-center justify-between gap-4 bg-brand-strong px-5 py-4 text-white sm:px-8">
-            <div>
-              <p className="text-xs font-semibold tracking-eyebrow text-on-brand-muted uppercase">
-                Roof One
-              </p>
-              <h2 id="advisor-dialog-title" className="text-lg font-semibold">
-                Roofing Advisor
-              </h2>
-            </div>
+            <h2 id="advisor-dialog-title" className="font-headline text-xl">
+              Roofing Advisor
+            </h2>
             <button
               type="button"
               onClick={close}

@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Sans } from "next/font/google";
+import { Archivo } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
-const bodyFont = Instrument_Sans({
+// Variable in weight and width: expanded for headlines, normal width for text.
+const bodyFont = Archivo({
   subsets: ["latin"],
-  variable: "--font-instrument-sans",
+  axes: ["wdth"],
+  variable: "--font-archivo",
 });
 
 export const metadata: Metadata = {
@@ -17,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f5f2ec",
+  themeColor: "#062B63",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -26,7 +26,7 @@ export interface SiteConfig {
 export const siteConfig: SiteConfig = {
   // Placeholder brand name. Replace with the company's real name.
   name: "Roof One",
-  tagline: "Stronger roofs. Safer homes.",
+  tagline: "Roof repair, replacement and inspections.",
   description:
     "Roof repair, replacement, and inspections. Tell us what’s going on with your roof and our team will follow up.",
   // Placeholder from the reserved fictional 555-01xx range. Replace before launch.

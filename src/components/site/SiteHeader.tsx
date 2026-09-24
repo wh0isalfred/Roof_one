@@ -125,7 +125,7 @@ export function SiteHeader() {
             <AdvisorButton
               onOpen={() => setMenuOpen(false)}
               className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-brand font-semibold text-white">
-              Get My Roof Assessment
+              Get a roof assessment
               <ArrowRight aria-hidden="true" className="size-4" />
             </AdvisorButton>
             <a

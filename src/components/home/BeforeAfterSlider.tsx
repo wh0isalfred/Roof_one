@@ -1,25 +1,23 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
-import { RoofPhoto } from "@/components/site/RoofPhoto";
+import { roofAfter, roofBefore } from "@/assets/photos";
 
 /** Drag (or use arrow keys) to compare before and after. */
 export function BeforeAfterSlider() {
   const [position, setPosition] = useState(50);
+  const sizes = "(min-width: 1024px) 40rem, 100vw";
 
   return (
-    <div className="relative isolate h-full min-h-64 overflow-hidden">
-      <RoofPhoto tone="soft" crop="object-[55%_35%]" sizes="(min-width: 1024px) 34rem, 100vw" />
+    <div className="relative isolate aspect-[16/9] overflow-hidden lg:aspect-auto lg:min-h-[22rem]">
+      <Image src={roofAfter} alt="" fill sizes={sizes} placeholder="blur" className="object-cover" />
       <div
         className="absolute inset-0"
         style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
       >
-        <RoofPhoto
-          tone="soft"
-          crop="object-[55%_35%] grayscale sepia-[0.35] brightness-75 contrast-90"
-          sizes="(min-width: 1024px) 34rem, 100vw"
-        />
+        <Image src={roofBefore} alt="" fill sizes={sizes} placeholder="blur" className="object-cover" />
       </div>
 
       <span className="absolute bottom-4 left-4 rounded-md bg-ink/80 px-3 py-1.5 text-xs font-semibold text-white">
@@ -46,7 +44,7 @@ export function BeforeAfterSlider() {
         max={100}
         value={position}
         onChange={(event) => setPosition(Number(event.target.value))}
-        aria-label="Compare before and after"
+        aria-label="Compare the roof before and after replacement"
         className="absolute inset-0 size-full cursor-ew-resize opacity-0"
       />
     </div>

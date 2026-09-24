@@ -9,7 +9,7 @@ export function AdvisorProgress({
 
   return (
     <div className="min-w-0 flex-1">
-      <p aria-hidden="true" className="text-xs font-semibold tracking-eyebrow text-ink-muted uppercase">
+      <p aria-hidden="true" className="text-sm font-medium text-ink-muted">
         {text}
       </p>
       <div
