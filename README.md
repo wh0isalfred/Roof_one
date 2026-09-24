@@ -10,8 +10,10 @@ The public site should read as a trustworthy roofing company. The advisor and
 automation are quiet infrastructure behind it, not the look of the site.
 
 **Status:** foundation. Routes, design tokens, the typed data model, the database
-schema and component shells are in place. Nothing is connected to Supabase, an AI
-provider, or email/SMS yet, and the admin shows placeholder data.
+schema and component shells are in place. The Roofing Advisor is a working
+conversation engine: it runs with no configuration, uses Claude when an API key is
+set, and saves conversations and leads to Supabase when Supabase is configured.
+Email/SMS aren't connected yet, and the admin still shows placeholder data.
 
 ## Getting started
 
@@ -25,7 +27,16 @@ npm run dev
 - http://localhost:3000: public site
 - http://localhost:3000/admin: admin (placeholder data, no sign-in yet)
 
-No environment variables are needed yet.
+No environment variables are required. These are all optional, server-only, and
+belong in `.env.local` (never `NEXT_PUBLIC_`):
+
+| Variable                    | What it turns on                                                      |
+| --------------------------- | --------------------------------------------------------------------- |
+| `ANTHROPIC_API_KEY`         | Claude as the advisor's understanding and voice. Without it, the built-in local advisor answers. |
+| `ROOFING_ADVISOR_MODEL`     | Overrides the Claude model (default `claude-opus-5`).                  |
+| `ROOFING_ADVISOR_PROVIDER`  | Set to `local` to force the local advisor even with a key.             |
+| `SUPABASE_URL`              | With the key below, saves conversations, photos and leads to Supabase. Without both, they're kept in memory only. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Service role key. Server-only: it bypasses Row Level Security.        |
 
 | Script              | What it does                                     |
 | ------------------- | ------------------------------------------------ |
@@ -34,6 +45,7 @@ No environment variables are needed yet.
 | `npm run start`     | Serve the production build                       |
 | `npm run lint`      | ESLint                                           |
 | `npm run typecheck` | Generate route types, then `tsc --noEmit`        |
+| `npm test`          | Vitest: the advisor's conversation, pricing, validation and persistence tests |
 
 ## Project structure
 
@@ -43,6 +55,7 @@ src/
     layout.tsx             Root layout: fonts, global styles, skip link
     globals.css            Design tokens (Tailwind v4 @theme)
     (site)/                Public site: header + footer layout, homepage
+    api/roofing-advisor/   message/ (one chat turn) and photos/ (photo uploads)
     admin/                 Internal lead management
       page.tsx             /admin (overview)
       leads/               /admin/leads, /admin/leads/[id]
@@ -51,14 +64,16 @@ src/
   components/
     site/                  Header, floating nav, mobile menu, footer
     home/                  Homepage sections
-    roofing-advisor/       Reusable assessment components
+    roofing-advisor/       The advisor chat: dialog, messages, composer, estimate
     admin/                 Admin UI
     ui/                    Shared primitives (Button, Container, SectionHeading)
   config/site.ts           Company name, phone, navigation (placeholders)
+  config/advisor.ts        Company facts the advisor may state (all unset)
   content/home.ts          Homepage copy (placeholders)
   lib/
     leads/                 Lead row types, option lists, priority, data access
-    advisor/               Assessment answer types, step config, helpers
+    roofing-advisor/       Advisor engine: understanding, state, goals, pricing,
+                           AI provider, validation, persistence
     automation/            Automation settings types, action catalog, data access
     placeholder-data.ts    Sample admin data (delete once Supabase is connected)
 supabase/
@@ -72,10 +87,34 @@ supabase/
   layout, design tokens and domain types.
 - **Server Components by default.** Client Components are limited to the mobile
   menu, nav active states, the assessment entry and Roofing Advisor, and the admin nav.
-- **The Roofing Advisor is a scripted flow.** Steps are data in
-  `lib/advisor/steps.ts`, rendered by vendor-neutral components. It works without
-  any AI provider. AI help, when added, sits behind a server-only adapter and is
-  never imported by UI components.
+- **The Roofing Advisor is a conversation engine, not a questionnaire.** Each
+  message goes to `POST /api/roofing-advisor/message`, where
+  `lib/roofing-advisor/engine.ts` runs one turn: read the message and extract every
+  fact in it (`extraction.ts`, `intents.ts`), update the structured assessment
+  (`assessment.ts`), rank what still matters from a controlled set of goals
+  (`goals.ts`), then phrase a short reply. The chat sends the conversation, the
+  assessment and its bookkeeping (`AdvisorContext`) with every message.
+- **The AI understands and phrases; code decides.** With `ANTHROPIC_API_KEY` set,
+  Claude reads the message and writes the reply as strict JSON
+  (`providers/anthropic.ts`, `prompts.ts`), choosing among the planner's top goals.
+  `validation.ts` rejects anything off-contract: extra keys, a goal that asks for
+  something known, prices, company claims, AI or call-center phrasing. Any
+  rejection or error falls back to the local advisor (`providers/local.ts`,
+  `phrasing.ts`), which also runs the chat when no key is set. State, pricing,
+  handoff, completion, events and lead creation are always deterministic.
+- **Prices come only from `pricing.ts`.** The AI never states a number. The
+  ranges in `PRELIMINARY_PRICING` are placeholders, clearly labeled as a planning
+  range in the chat; replace them with Roof One's pricing before launch.
+- **One lead per conversation.** Once there's a name and a phone or email, the
+  lead is created, then kept current as the conversation continues. The database
+  function `upsert_advisor_lead` makes this idempotent. Persistence runs after the
+  reply is sent (`after()`), through `lib/roofing-advisor/store`.
+- **Events, not integrations.** The advisor emits `LEAD_CREATED`,
+  `ASSESSMENT_COMPLETED`, `ESTIMATE_GENERATED`, `PHOTO_UPLOADED`, `HUMAN_REQUESTED`
+  and `CONTACT_SUBMITTED` (`events.ts`, stored in `advisor_events`). Automation
+  subscribes later; the advisor never talks to email or SMS providers.
+- UI components never import the engine, the AI SDK or the store. The chat talks
+  to the API through `lib/roofing-advisor/client.ts`.
 - **Automation is provider-neutral.** `lib/automation` holds the settings model and
   action catalog. Email and SMS delivery will live behind adapters so providers can
   change without touching the UI.
@@ -103,6 +142,19 @@ supabase/
 | `appointments`        | Requested visit date, time and status                             |
 | `automation_settings` | One row of global automation switches, all off by default         |
 
+`supabase/migrations/20260924000000_roofing_advisor.sql` adds the advisor's tables:
+
+| Table                   | Purpose                                                         |
+| ----------------------- | --------------------------------------------------------------- |
+| `advisor_conversations` | One row per chat, linked to its lead once there is one          |
+| `advisor_messages`      | Every message, with the goal behind each question and photos    |
+| `advisor_assessments`   | The latest structured assessment, confidence and estimate       |
+| `advisor_events`        | Advisor events for automation to pick up                        |
+
+It also adds `upsert_advisor_lead` (creates the lead once, copies the conversation
+and photos into `lead_messages` and `lead_photos`), a trigger that keeps copying
+later messages into `lead_messages`, and a private `advisor-photos` Storage bucket.
+
 Row Level Security is on for every table with no policies yet, so nothing can be
 read or written with the public key. Policies come with Supabase Auth.
 
@@ -126,13 +178,16 @@ references.
 
 ## Not built yet
 
-- Supabase client, environment variables, generated types, and lead creation from
-  the advisor (Server Action), including photo upload to Storage
+- Admin queries reading from Supabase (the advisor already writes leads, their
+  conversation, photos and events there), generated database types, and signed
+  URLs for photo thumbnails
+- Roof One's real pricing rules in `lib/roofing-advisor/pricing.ts`, and confirmed
+  company answers in `config/advisor.ts`
+- A shared rate limit for the advisor API (the built-in one is per server instance)
 - Supabase Auth for `/admin`, plus RLS policies
 - Admin actions: status changes, notes, email/SMS, pause/resume automation
 - Email/SMS providers and the follow-up scheduler. Automated texts need recorded
   SMS consent first.
-- Optional AI assistance for the advisor
 - Real content: company name, phone, service area, photography, projects,
   reviews (real ones only) and FAQs reviewed by the company
 - Visual polish from the design references: hero photography, sticky nav, motion

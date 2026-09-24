@@ -16,7 +16,7 @@ Roofing company website + lead-recovery system. See README.md for structure and 
 - Server Components by default. Add `"use client"` only where interaction needs it.
 - UI components never import AI, email, or SMS vendor SDKs. Provider code lives behind adapters in `src/lib/`.
 - Pages read data only through `src/lib/**/queries.ts`. Supabase is the source of truth for leads.
-- Enum values in `supabase/migrations` mirror the option lists in `src/lib/leads/options.ts`. Change both together.
+- Enum values in `supabase/migrations` mirror the option lists in `src/lib/leads/options.ts` (advisor tables: the lists named in the advisor migration). Change both together.
 - Colors, radii and shadows come from the tokens in `src/app/globals.css` (Tailwind defaults are cleared). No gradients, glows, or glassmorphism.
 - Public copy makes no unconfirmed claims: ratings, certifications, warranties, years in business, or service areas.
-- Run `npm run typecheck`, `npm run lint` and `npm run build` before pushing.
+- Run `npm run typecheck`, `npm run lint`, `npm test` and `npm run build` before pushing.
