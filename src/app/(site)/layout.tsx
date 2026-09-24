@@ -1,5 +1,6 @@
 import type { Viewport } from "next";
 import { AdvisorProvider } from "@/components/roofing-advisor/AdvisorDialog";
+import { AdvisorLauncher } from "@/components/roofing-advisor/AdvisorLauncher";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
 
@@ -13,6 +14,7 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
       <SiteHeader />
       <main id="main">{children}</main>
       <SiteFooter />
+      <AdvisorLauncher />
     </AdvisorProvider>
   );
 }

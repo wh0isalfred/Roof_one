@@ -4,6 +4,8 @@ export interface Service {
   id: string;
   title: string;
   summary: string;
+  /** One-line card copy. */
+  blurb: string;
   helpsWith: readonly string[];
   /** Preselected in the Roofing Advisor when the visitor continues from this service. */
   issue: IssueType;
@@ -11,10 +13,11 @@ export interface Service {
   crop: string;
 }
 
-export const SERVICES: readonly [Service, Service, Service] = [
+export const SERVICES: readonly Service[] = [
   {
     id: "storm-damage",
     title: "Storm Damage",
+    blurb: "Fast response for severe weather.",
     summary:
       "After the storm, get the facts. We’ll assess the damage and guide your next steps.",
     helpsWith: [
@@ -29,6 +32,7 @@ export const SERVICES: readonly [Service, Service, Service] = [
   {
     id: "roof-repair",
     title: "Roof Repair",
+    blurb: "Fixing issues early saves money.",
     summary:
       "Fixing issues early can save you time, money and bigger problems later.",
     helpsWith: [
@@ -43,6 +47,7 @@ export const SERVICES: readonly [Service, Service, Service] = [
   {
     id: "roof-replacement",
     title: "Roof Replacement",
+    blurb: "Long-term protection and higher value.",
     summary:
       "A new roof means better protection, more value and long-term peace of mind.",
     helpsWith: [
@@ -53,5 +58,20 @@ export const SERVICES: readonly [Service, Service, Service] = [
     ],
     issue: "replacement",
     crop: "object-[55%_35%]",
+  },
+  {
+    id: "inspections",
+    title: "Inspections",
+    blurb: "Know your roof’s true condition.",
+    summary:
+      "A clear picture of your roof’s condition, so you can plan repairs before they become emergencies.",
+    helpsWith: [
+      "Roof condition checks",
+      "Pre-purchase and pre-sale inspections",
+      "Post-storm checkups",
+      "Photos and notes on what we find",
+    ],
+    issue: "inspection",
+    crop: "object-[30%_55%] scale-[1.9] origin-[30%_55%]",
   },
 ];

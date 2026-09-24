@@ -1,51 +1,40 @@
 import { Plus } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-
-const FAQS = [
-  {
-    question: "How do I know if I need a repair or a replacement?",
-    answer:
-      "It depends on the roof’s age, what’s damaged, and how widespread the damage is. The assessment gathers those details so the team can recommend the right next step, and an inspection confirms it.",
-  },
-  {
-    question: "What happens after I request an assessment?",
-    answer:
-      "A member of the team reviews your answers and contacts you the way you asked — by phone, text or email — to talk through next steps and arrange a visit if one is needed.",
-  },
-  {
-    question: "Can you help with storm damage?",
-    answer:
-      "Yes. We’ll assess what the storm did to your roof and walk you through the options. We can also note what we find so you have it for your records.",
-  },
-  {
-    question: "Do I need to know the age of my roof?",
-    answer:
-      "No. A rough guess helps, and “not sure” is a fine answer. The inspection will tell us the rest.",
-  },
-  {
-    question: "Do I have to upload photos?",
-    answer:
-      "Photos are optional. They help the team prepare, but you can skip that step and still send your request.",
-  },
-] as const;
+import { MoreLink, SectionHeading } from "@/components/ui/SectionHeading";
+import { SAMPLE_FAQS } from "@/content/sample";
 
 export function FaqSection() {
   return (
-    <section aria-label="Frequently asked questions" className="bg-surface py-16 lg:py-24">
-      <Container className="max-w-3xl">
-        <div className="divide-y divide-line border-y border-line">
-          {FAQS.map((faq) => (
-            <details key={faq.question} className="group">
-              <summary className="flex min-h-16 cursor-pointer items-center justify-between gap-6 py-5 text-lg font-semibold">
-                {faq.question}
-                <Plus
-                  aria-hidden="true"
-                  className="size-5 shrink-0 text-brand transition-transform group-open:rotate-45 motion-reduce:transition-none"
-                />
-              </summary>
-              <p className="-mt-1 pb-6 leading-relaxed text-ink-muted">{faq.answer}</p>
-            </details>
-          ))}
+    <section id="faq" aria-labelledby="faq-title" className="scroll-mt-16 bg-canvas py-20 lg:py-24">
+      <Container className="max-w-6xl">
+        <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+          <div>
+            <SectionHeading
+              id="faq-title"
+              eyebrow="Frequently asked questions"
+              title="Got Questions? We’ve Got Answers."
+              description="Find answers to the most common questions about our services, process, and roofing in general."
+            />
+            <MoreLink href="/#faq">View All FAQs</MoreLink>
+          </div>
+
+          <div className="grid gap-3">
+            {SAMPLE_FAQS.map((faq) => (
+              <details
+                key={faq.question}
+                className="group rounded-md border border-line bg-canvas transition-colors open:border-brand-light open:bg-brand-soft"
+              >
+                <summary className="flex min-h-14 cursor-pointer items-center justify-between gap-6 px-5 py-3 text-sm font-medium">
+                  {faq.question}
+                  <Plus
+                    aria-hidden="true"
+                    className="size-4 shrink-0 text-brand transition-transform group-open:rotate-45 motion-reduce:transition-none"
+                  />
+                </summary>
+                <p className="px-5 pb-5 text-sm leading-relaxed text-ink-muted">{faq.answer}</p>
+              </details>
+            ))}
+          </div>
         </div>
       </Container>
     </section>

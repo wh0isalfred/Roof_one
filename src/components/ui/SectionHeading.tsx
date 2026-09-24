@@ -1,3 +1,6 @@
+import { ArrowRight } from "lucide-react";
+import type { Route } from "next";
+import Link from "next/link";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
@@ -36,7 +39,7 @@ interface SectionHeadingProps {
   className?: string;
 }
 
-/** Eyebrow, uppercase headline and optional lead. Wrap words in <Accent> to color them. */
+/** Eyebrow, headline and optional lead. Wrap words in <Accent> to color them. */
 export function SectionHeading({
   id,
   eyebrow,
@@ -51,7 +54,7 @@ export function SectionHeading({
       <h2
         id={id}
         className={cn(
-          "mt-5 font-display text-3xl leading-[1.05] font-bold tracking-tight uppercase sm:text-4xl lg:text-[2.75rem]",
+          "mt-4 font-display text-3xl leading-[1.12] font-semibold tracking-tight sm:text-4xl lg:text-[2.6rem]",
           tone === "inverse" ? "text-white" : "text-ink",
         )}
       >
@@ -60,7 +63,7 @@ export function SectionHeading({
       {description && (
         <p
           className={cn(
-            "mt-5 max-w-md text-base leading-relaxed text-pretty sm:text-lg",
+            "mt-5 max-w-lg text-base leading-relaxed text-pretty sm:text-lg",
             tone === "inverse" ? "text-on-brand-muted" : "text-ink-muted",
           )}
         >
@@ -82,5 +85,21 @@ export function Accent({
     <span className={tone === "inverse" ? "text-brand-bright" : "text-brand"}>
       {children}
     </span>
+  );
+}
+
+/** "View all →" style link under a section intro. */
+export function MoreLink({ href, children }: { href: Route; children: ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="group mt-7 inline-flex items-center gap-2 text-sm font-semibold text-brand"
+    >
+      {children}
+      <ArrowRight
+        aria-hidden="true"
+        className="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none"
+      />
+    </Link>
   );
 }
