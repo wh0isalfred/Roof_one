@@ -3,28 +3,28 @@
 /*
  * Design tokens.
  *
- * Palette: Deep Slate primary dark, restrained Roof Accent, and warm off-white surfaces.
- * All text pairings meet WCAG AA contrast.
+ * Premium roofing palette: Strong primary blue (#155EEF), deep authority blue (#062B63),
+ * clean white, and selective orange (#FF6B00) for actions only.
  */
 @theme {
   --color-*: initial;
-  --color-white: #ffffff;
-  --color-canvas: #F7F6F2; /* Off White - main page background */
-  --color-surface: #FCFBF8; /* Warm White - cards, forms, elevated surfaces */
-  --color-subtle: #E8E6E0; /* Soft Stone - quiet fills, hover states */
-  --color-line: #E8E6E0; /* Soft Stone - dividers and borders */
-  --color-control: #B8B8B0; /* Mid Stone - form control borders */
-  --color-ink: #171D21; /* Charcoal - high-emphasis body/headline text */
-  --color-ink-muted: #B8B8B0; /* Mid Stone - secondary text / metadata */
-  --color-brand: #1E2B33; /* Deep Slate - primary brand, dark sections, nav */
-  --color-brand-strong: #2D3A41; /* Slate 2 - hover states, secondary dark */
-  --color-brand-soft: #F7F6F2; /* Off White - light variant of brand */
-  --color-on-brand-muted: #B8B8B0; /* Mid Stone - secondary text on dark backgrounds */
-  --color-accent: #A87952; /* Roof Accent - restrained warm accent */
-  --color-accent-strong: #8B6345;
-  --color-accent-soft: #F0E8E0;
-  --color-success: #52705B; /* Positive/status states */
-  --color-danger: #A5534B; /* Urgent/error states */
+  --color-white: #FFFFFF;
+  --color-canvas: #FFFFFF; /* Main background */
+  --color-surface: #FAFBFC; /* Subtle raised surfaces */
+  --color-subtle: #F0F4F8; /* Quiet fills, hover states */
+  --color-line: #E5EAEF; /* Dividers and borders */
+  --color-control: #9CA3AF; /* Form control borders */
+  --color-ink: #07131F; /* Ink - primary text */
+  --color-ink-muted: #6B7280; /* Secondary text */
+  --color-brand: #155EEF; /* Primary Blue - brand energy */
+  --color-brand-strong: #062B63; /* Deep Blue - authority and contrast */
+  --color-brand-soft: #EEF5FF; /* Blue Surface - light variant */
+  --color-on-brand-muted: #86B4E8; /* Light blue text on dark backgrounds */
+  --color-accent: #FF6B00; /* Action Orange - CTAs and accents */
+  --color-accent-strong: #D45A00;
+  --color-accent-soft: #FFF4E6;
+  --color-success: #10B981;
+  --color-danger: #EF4444;
 
   --radius-*: initial;
   --radius-sm: 0.25rem;
@@ -44,7 +44,7 @@
 /* Font families come from next/font variables set on <html> in the root layout. */
 @theme inline {
   --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {

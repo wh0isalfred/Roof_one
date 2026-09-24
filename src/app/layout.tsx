@@ -1,12 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Instrument_Sans } from "next/font/google";
+import { Instrument_Sans } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
-
-const displayFont = Archivo({
-  subsets: ["latin"],
-  variable: "--font-archivo",
-});
 
 const bodyFont = Instrument_Sans({
   subsets: ["latin"],
@@ -31,7 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       // Smooth-scroll in-page anchors, but keep route changes instant.
       data-scroll-behavior="smooth"
-      className={`${displayFont.variable} ${bodyFont.variable}`}
+      className={bodyFont.variable}
     >
       <body>
         <a

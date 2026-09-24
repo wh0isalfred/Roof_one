@@ -1,247 +1,87 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { useState } from "react";
+import Link from "next/link";
+import { ArrowRight, Phone } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-
-/**
- * Rotating circular badge with SVG text ring and arrow icon.
- * Animates continuously, pauses on hover, arrow nudges up-right.
- */
-function CircularBadge({ size = 110 }: { size?: number }) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [prefersReduced, setPrefersReduced] = useState(false);
-
-  useEffect(() => {
-    // Check prefers-reduced-motion
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReduced(mq.matches);
-  }, []);
-
-  const radius = size / 2;
-  const innerRadius = radius - 16;
-  const textRadius = innerRadius - 8;
-
-  const text = "Explore Our Services. Explore Our Services. ";
-  const circumference = 2 * Math.PI * textRadius;
-
-  return (
-    <a
-      href="#services"
-      className="group relative flex shrink-0 items-center justify-center"
-      style={{ width: size, height: size }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <svg
-        width={size}
-        height={size}
-        viewBox={`0 0 ${size} ${size}`}
-        className="absolute inset-0"
-      >
-        {/* Red circle background */}
-        <circle
-          cx={radius}
-          cy={radius}
-          r={radius}
-          fill="var(--color-accent)"
-          className="transition-all duration-300"
-        />
-
-        {/* Rotating text path */}
-        <defs>
-          <path
-            id="textCircle"
-            d={`M ${radius} ${radius} m -${textRadius} 0 a ${textRadius} ${textRadius} 0 1 1 ${
-              textRadius * 2
-            } 0 a ${textRadius} ${textRadius} 0 1 1 -${textRadius * 2} 0`}
-            fill="none"
-          />
-        </defs>
-
-        <g
-          style={{
-            transformOrigin: `${radius}px ${radius}px`,
-            animation: prefersReduced ? "none" : "spin-slow 20s linear infinite",
-            animationPlayState: isHovered && !prefersReduced ? "paused" : "running",
-            transition: "animation-play-state 0.3s ease",
-          }}
-        >
-          <text
-            fontSize="11"
-            fontWeight="600"
-            letterSpacing="0.05em"
-            fill="white"
-            textAnchor="middle"
-            dominantBaseline="middle"
-          >
-            <textPath href="#textCircle" startOffset="0%">
-              {text}
-            </textPath>
-          </text>
-        </g>
-      </svg>
-
-      {/* Center arrow icon */}
-      <div
-        className={`relative z-10 transition-transform duration-300 ${
-          isHovered ? "-translate-y-1 translate-x-1" : ""
-        }`}
-      >
-        <ArrowUpRight
-          size={size * 0.4}
-          className="text-white"
-          strokeWidth={2.5}
-        />
-      </div>
-    </a>
-  );
-}
-
-/**
- * Image card with top-left radius and notch cutout for badge.
- * The notch creates an inverted rounded effect where the dark bg "bites" into the image.
- */
-function ImageCard({
-  src,
-  alt,
-  className = "",
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-}) {
-  const badgeSize = 110;
-  const notchRadius = badgeSize / 2 + 8;
-
-  return (
-    <div
-      className={`relative shrink-0 overflow-hidden ${className}`}
-      style={{
-        height: "520px",
-        minHeight: "520px",
-      }}
-    >
-      {/* SVG mask to cut the notch in the top-left */}
-      <svg
-        className="absolute inset-0 z-20 pointer-events-none"
-        width="100%"
-        height="100%"
-        viewBox="0 0 400 520"
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <mask id="notchMask">
-            {/* White = visible, black = hidden */}
-            <rect width="400" height="520" fill="white" />
-            {/* Cut out the notch area (top-left) */}
-            <circle cx="55" cy="55" r={notchRadius} fill="black" />
-          </mask>
-        </defs>
-        <rect width="400" height="520" mask="url(#notchMask)" fill="none" />
-      </svg>
-
-      {/* Main image */}
-      <img
-        src={src}
-        alt={alt}
-        className="h-full w-full object-cover"
-      />
-
-      {/* Badge positioned in the notch */}
-      <div className="absolute top-0 left-0 z-30 -translate-x-1/4 -translate-y-1/4">
-        <CircularBadge size={badgeSize} />
-      </div>
-    </div>
-  );
-}
+import { RoofingAdvisorModal } from "@/components/roofing-advisor/RoofingAdvisorModal";
 
 export function HeroSection() {
+  const [showAdvisor, setShowAdvisor] = useState(false);
+
   return (
-    <section
-      aria-labelledby="hero-heading"
-      className="relative pt-40 pb-0 overflow-hidden"
-    >
-      {/* Dark background block that fills ~80% height */}
-      <div className="absolute inset-x-0 top-0 h-[80%] bg-brand pointer-events-none" />
-
-      {/* Light background (page background) shows beneath */}
-      <div className="absolute inset-x-0 top-[80%] h-[20%] bg-canvas pointer-events-none" />
-
-      <div className="relative z-10">
-        <Container className="max-w-7xl">
-          {/* Headline - spans full width, top area */}
-          <h1
-            id="hero-heading"
-            className="font-display text-white font-medium mb-20"
+    <>
+      <section className="relative min-h-screen bg-white pt-32 pb-0 overflow-hidden">
+        {/* Background image with overlay */}
+        <div className="absolute inset-0 z-0">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
             style={{
-              fontSize: "clamp(3rem, 7.5vw, 6.5rem)",
-              lineHeight: "1.0",
-              letterSpacing: "-0.02em",
+              backgroundImage: 'url(https://images.unsplash.com/photo-1541123603104-852fc1296b27?w=1400&q=80)',
+              backgroundPosition: 'center 40%',
             }}
-          >
-            Secure roofing<br />
-            built to last.
-          </h1>
+          />
+          {/* Dark gradient overlay from left to right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-strong via-brand-strong/70 to-transparent" />
+        </div>
 
-          {/* Two-column layout */}
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[35%_65%] lg:gap-8">
-            {/* Left column: social proof + description */}
-            <div className="flex flex-col gap-8">
-              {/* Social proof row */}
-              <div className="flex items-center gap-4">
-                {/* Avatar stack */}
-                <div className="flex -space-x-3">
+        {/* Content */}
+        <Container className="relative z-10 max-w-6xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-128px)]">
+            {/* Left column: text */}
+            <div className="text-white">
+              <h1 className="font-display font-semibold text-5xl lg:text-7xl leading-tight mb-8">
+                When your roof needs attention, start here.
+              </h1>
+
+              <p className="text-lg text-white/90 mb-8 max-w-md leading-relaxed">
+                From leaks and storm damage to full replacement, start with a simple assessment and let our team help you figure out the next step.
+              </p>
+
+              {/* CTAs */}
+              <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                <button
+                  onClick={() => setShowAdvisor(true)}
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent text-white font-semibold rounded-lg hover:bg-accent-strong transition-colors"
+                >
+                  Get My Roof Assessment
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+                <Link
+                  href="tel:+15551234567"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-brand-strong font-semibold rounded-lg hover:bg-brand-soft transition-colors"
+                >
+                  <Phone className="w-4 h-4" />
+                  Call Us
+                </Link>
+              </div>
+
+              {/* Trust indicator */}
+              <div className="flex items-center gap-2 text-white/75 text-sm">
+                <div className="flex -space-x-2">
                   {[...Array(3)].map((_, i) => (
                     <div
                       key={i}
-                      className="w-10 h-10 rounded-full bg-white border-2 border-brand flex items-center justify-center text-sm font-semibold text-ink"
+                      className="w-8 h-8 rounded-full bg-accent border-2 border-white flex items-center justify-center text-xs font-bold text-white"
                     >
-                      {String.fromCharCode(65 + i)}
+                      {i + 1}
                     </div>
                   ))}
                 </div>
-
-                {/* Plus badge */}
-                <div className="w-10 h-10 rounded-full bg-accent text-white border-2 border-brand flex items-center justify-center flex-shrink-0">
-                  <span className="text-lg font-bold">+</span>
-                </div>
-
-                {/* Customer count text */}
-                <p
-                  className="text-sm text-white"
-                  style={{ opacity: 0.85 }}
-                >
-                  2,400+ satisfied customers across the Northeast
-                </p>
+                <span>2,400+ homes protected</span>
               </div>
-
-              {/* Description paragraph - positioned to align with middle of image */}
-              <p
-                className="font-sans text-white leading-relaxed max-w-sm"
-                style={{
-                  fontSize: "16px",
-                  opacity: 0.85,
-                  lineHeight: 1.6,
-                }}
-              >
-                From storm damage to routine maintenance, we deliver expert craftsmanship and quality materials. Your home deserves a roof that lasts.
-              </p>
             </div>
 
-            {/* Right column: image card that bleeds off right edge */}
-            <div className="relative -mr-[100vw] md:-mr-12 lg:-mr-40 xl:-mr-[50vw]">
-              <ImageCard
-                src="https://images.unsplash.com/photo-1581578731548-c64695c952952?w=800&h=520&fit=crop"
-                alt="Professional roofers at work on residential roof"
-              />
-            </div>
+            {/* Right column: spacer for image area */}
+            <div className="hidden lg:block" />
           </div>
         </Container>
-      </div>
+      </section>
 
-      {/* Light area background for the image overlap zone */}
-      <div className="absolute inset-x-0 bottom-0 h-[20%] bg-canvas" />
-    </section>
+      {/* Roofing Advisor Modal */}
+      {showAdvisor && (
+        <RoofingAdvisorModal onClose={() => setShowAdvisor(false)} />
+      )}
+    </>
   );
 }

@@ -1,39 +1,71 @@
-import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { siteConfig } from "@/config/site";
 import { Logo } from "./Logo";
-import { MobileMenu } from "./MobileMenu";
-import { PrimaryNav } from "./PrimaryNav";
 
-/**
- * Floating header: wordmark on the left, a compact link bar in the middle and
- * the assessment CTA on the right. It sits over the hero.
- */
 export function SiteHeader() {
-  const { links, cta } = siteConfig.nav;
-
   return (
-    <header className="on-dark absolute inset-x-0 top-0 z-40">
-      <Container className="relative flex h-20 items-center justify-between gap-4 lg:grid lg:grid-cols-[1fr_auto_1fr]">
-        <Logo className="text-canvas" />
-        <PrimaryNav links={links} className="hidden lg:block" />
-        <div className="flex items-center justify-end">
-          <Link
-            href={cta.href}
-            className="hidden h-12 items-center gap-3 rounded-full bg-surface pr-1.5 pl-5 text-sm font-semibold text-ink transition-colors hover:bg-white lg:inline-flex"
-          >
-            {cta.label}
-            <span className="flex size-9 items-center justify-center rounded-full bg-ink text-canvas">
-              <ArrowUpRight aria-hidden="true" className="size-4" />
-            </span>
+    <header className="fixed inset-x-0 top-0 z-40 pt-6">
+      <Container className="max-w-6xl">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex-shrink-0">
+            <Logo className="text-ink" />
           </Link>
-          <MobileMenu
-            links={links}
-            cta={cta}
-            phone={siteConfig.phone}
-            className="lg:hidden"
-          />
+
+          {/* Navigation Pill */}
+          <nav className="hidden lg:flex items-center gap-1 bg-white rounded-full px-2 py-2 border border-line shadow-lg">
+            <Link
+              href="/"
+              className="px-4 py-2 rounded-full text-sm font-medium text-ink hover:bg-subtle transition-colors"
+            >
+              Home
+            </Link>
+            <Link
+              href="#services"
+              className="px-4 py-2 rounded-full text-sm font-medium text-ink hover:bg-subtle transition-colors"
+            >
+              Services
+            </Link>
+            <Link
+              href="#projects"
+              className="px-4 py-2 rounded-full text-sm font-medium text-ink hover:bg-subtle transition-colors"
+            >
+              Projects
+            </Link>
+            <Link
+              href="#faqs"
+              className="px-4 py-2 rounded-full text-sm font-medium text-ink hover:bg-subtle transition-colors"
+            >
+              FAQs
+            </Link>
+          </nav>
+
+          {/* CTA Button */}
+          <Link
+            href="tel:+15551234567"
+            className="hidden sm:flex items-center gap-2 px-6 py-3 bg-ink text-white font-medium rounded-full hover:bg-brand transition-colors"
+          >
+            Call Us
+            <ArrowUpRight className="w-4 h-4" />
+          </Link>
+
+          {/* Mobile menu button (placeholder) */}
+          <button className="lg:hidden p-2 hover:bg-subtle rounded-lg transition-colors">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
         </div>
       </Container>
     </header>
