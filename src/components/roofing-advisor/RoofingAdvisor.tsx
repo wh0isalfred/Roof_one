@@ -9,6 +9,8 @@ interface RoofingAdvisorProps {
   onClose?: () => void;
 }
 
-export function RoofingAdvisor({ initialAnswers, onClose }: RoofingAdvisorProps) {
-  return <AdvisorChat initialIssue={initialAnswers?.issue_type} onClose={onClose} />;
+export function RoofingAdvisor({ initialAnswers, focusOnMount, onClose }: RoofingAdvisorProps) {
+  return (
+    <AdvisorChat initialIssue={initialAnswers?.issue_type} onClose={onClose} focusOnMount={focusOnMount} />
+  );
 }
