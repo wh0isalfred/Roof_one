@@ -18,7 +18,7 @@ export function FinalCtaSection() {
           </h2>
 
           <p className="text-lg lg:text-xl text-white/90 mb-12 max-w-2xl mx-auto">
-            Tell us what's happening and we'll help you figure out the next step.
+            Tell us what&apos;s happening and we&apos;ll help you figure out the next step.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

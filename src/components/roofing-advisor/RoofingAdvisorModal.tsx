@@ -111,7 +111,7 @@ export function RoofingAdvisorModal({ onClose }: { onClose: () => void }) {
           {currentStep === "issue" && (
             <div>
               <h3 className="text-xl font-semibold mb-6 text-ink">
-                What's going on with your roof?
+                What&apos;s going on with your roof?
               </h3>
               <div className="space-y-3">
                 {issueOptions.map((option) => (

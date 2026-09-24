@@ -3,8 +3,8 @@ import { Container } from "@/components/ui/Container";
 const steps = [
   {
     number: "01",
-    title: "Tell us what's happening",
-    description: "Describe your roof issue and we'll ask some clarifying questions.",
+    title: "Tell us what&apos;s happening",
+    description: "Describe your roof issue and we&apos;ll ask some clarifying questions.",
   },
   {
     number: "02",
@@ -19,7 +19,7 @@ const steps = [
   {
     number: "04",
     title: "You know the next step",
-    description: "Whether it's repair or replacement, you'll have a clear plan.",
+    description: "Whether it&apos;s repair or replacement, you&apos;ll have a clear plan.",
   },
 ];
 
@@ -32,7 +32,7 @@ export function HowItWorksSection() {
             How it works
           </h2>
           <p className="text-lg text-ink-muted max-w-2xl">
-            We've simplified the process. Four steps from assessment to clarity.
+            We&apos;ve simplified the process. Four steps from assessment to clarity.
           </p>
         </div>
 

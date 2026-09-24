@@ -43,12 +43,11 @@ export function ProjectsSection() {
             Our work
           </h2>
           <p className="text-lg text-ink-muted max-w-2xl">
-            Real roofing solutions for real homeowners. Here's some of our recent projects.
+            Real roofing solutions for real homeowners. Here&apos;s some of our recent projects.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Large featured project */}
           {featuredProject && (
             <div className="md:col-span-2 lg:col-span-2 lg:row-span-2">
               <div className="h-96 lg:h-full rounded-xl overflow-hidden group cursor-pointer">
@@ -70,7 +69,6 @@ export function ProjectsSection() {
             </div>
           )}
 
-          {/* Smaller projects */}
           {otherProjects.map((project) => (
             <div key={project.id} className="group cursor-pointer">
               <div className="h-56 rounded-lg overflow-hidden mb-4">
