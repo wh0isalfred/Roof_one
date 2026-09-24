@@ -74,7 +74,7 @@ export function MoreLink({
 }) {
   const className = cn(
     "group mt-7 inline-flex items-center gap-2 font-semibold",
-    tone === "inverse" ? "text-brand-bright" : "text-brand",
+    tone === "inverse" ? "text-brand-bright" : "text-accent",
   );
   const content = (
     <>

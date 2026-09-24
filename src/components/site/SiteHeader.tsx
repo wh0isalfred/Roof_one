@@ -77,7 +77,7 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <AdvisorButton className="hidden h-11 items-center gap-2 rounded-full bg-brand px-5 text-sm font-semibold text-white transition-colors hover:bg-brand-bright sm:inline-flex">
+            <AdvisorButton className="hidden h-11 items-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-white transition-colors hover:bg-brand-bright sm:inline-flex">
               {cta.label}
               <ArrowRight aria-hidden="true" className="size-4" />
             </AdvisorButton>
