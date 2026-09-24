@@ -23,7 +23,7 @@ export function HeroSection() {
               <span className="text-brand-bright">With Confidence.</span>
             </h1>
             <p className="mt-7 max-w-lg text-lg leading-relaxed text-white/85">
-              Professional roofing services, expert advice, and fast, reliable supoort - because your home deserves the best.
+              Professional roofing services, expert advice, and fast, reliable support - because your home deserves the best.
             </p>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
@@ -43,7 +43,7 @@ export function HeroSection() {
             </div>
 
             <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5 border-t border-white/15 pt-7">
-              <div className="flex items-center gap-4">
+              {/* <div className="flex items-center gap-4">
                 <ul aria-hidden="true" className="flex -space-x-3">
                   {SAMPLE_PROOF.photos.map((photo) => (
                     <li key={photo.src} className="size-10 overflow-hidden rounded-full border-2 border-brand-strong">
@@ -55,7 +55,7 @@ export function HeroSection() {
                   <span className="block font-semibold">{SAMPLE_PROOF.headline}</span>
                   <span className="text-white/65">{SAMPLE_PROOF.detail}</span>
                 </p>
-              </div>
+              </div> */}
               <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/80">
                 <li className="flex items-center gap-2">
                   <Clock aria-hidden="true" className="size-4" />
