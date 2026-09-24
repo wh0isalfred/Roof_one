@@ -71,7 +71,11 @@ supabase/
   (`src/app/admin`) have separate layouts and components. They share only the root
   layout, design tokens and domain types.
 - **Server Components by default.** Client Components are limited to the mobile
-  menu, nav active states, the assessment entry and Roofing Advisor, and the admin nav.
+  menu, nav active states, the Roofing Advisor and the buttons that open it, the
+  service details, the before/after slider, and the admin nav.
+- **The homepage introduces the assessment; it doesn't contain it.** Every
+  "Start your assessment" button opens the Roofing Advisor as a full-screen
+  guided flow (`AdvisorDialog`), keeping answers if the visitor closes and comes back.
 - **The Roofing Advisor is a scripted flow.** Steps are data in
   `lib/advisor/steps.ts`, rendered by vendor-neutral components. It works without
   any AI provider. AI help, when added, sits behind a server-only adapter and is
@@ -113,16 +117,20 @@ Once a Supabase project exists, apply it with the Supabase CLI:
 
 Tokens live in `src/app/globals.css`:
 
-- **Color:** warm off-white, charcoal, deep muted green, muted clay accent.
-  Tailwind's default palette is removed so only these tokens exist. Every text
-  pairing meets WCAG AA contrast.
-- **Type:** Archivo for display headlines, Instrument Sans for body and UI
-  (loaded with `next/font`).
-- **Shape:** small radii only, no gradients, and a single shadow reserved for the
-  mobile menu overlay.
-
-This is a starting point. The final visual direction comes from the design
-references.
+- **Color:** white, near black (`#0A0D12`) and one strong blue. Primary blue
+  (`#0757C9`) marks actions, selected states and the closing call-to-action field;
+  deep blue (`#062B63`) is the header, dark sections and footer; the cool surface
+  (`#F3F7FC`) is used sparingly. Roughly 65–75% white, 15–25% deep blue, 5–15%
+  primary blue. Orange is kept for admin status signals only. Tailwind's default
+  palette is removed so only these tokens exist. Every text pairing meets WCAG AA
+  contrast.
+- **Type:** Archivo (variable weight and width, loaded with `next/font`), widened
+  and heavy for headlines (`font-headline`). The scale is `text-display` (hero
+  only), `text-heading` (section titles), `text-heading-lg` (closing call to
+  action), then the default `text-lg` / `text-base` / `text-sm`. Headings carry
+  each section on their own: no eyebrow labels above them.
+- **Shape:** small radii only, no gradients, and a single shadow reserved for
+  floating layers (dialogs, the advisor launcher, the slider handle).
 
 ## Not built yet
 

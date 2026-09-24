@@ -7,7 +7,6 @@ export function RoofPhoto({
   src = heroImage,
   crop,
   tone = "strong",
-  priority = false,
   sizes,
   className,
 }: {
@@ -15,7 +14,6 @@ export function RoofPhoto({
   /** Tailwind classes that frame the image, e.g. object position and scale. */
   crop?: string;
   tone?: "strong" | "soft";
-  priority?: boolean;
   sizes: string;
   className?: string;
 }) {
@@ -25,7 +23,6 @@ export function RoofPhoto({
         src={src}
         alt=""
         fill
-        priority={priority}
         placeholder="blur"
         sizes={sizes}
         className={cn(

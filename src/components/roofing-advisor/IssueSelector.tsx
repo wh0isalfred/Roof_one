@@ -7,10 +7,10 @@ interface IssueSelectorProps {
   onSelect: (issue: IssueType) => void;
 }
 
-/** The roofing issue choices, used on the homepage and as the advisor's first step. */
+/** The roofing issue choices: the advisor's first step. */
 export function IssueSelector({ value, onSelect }: IssueSelectorProps) {
   return (
-    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid gap-3 sm:grid-cols-2">
       {ISSUE_TYPE_OPTIONS.map((option) => (
         <li key={option.value}>
           <AdvisorOption
