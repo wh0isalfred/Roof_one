@@ -15,11 +15,12 @@ export function Eyebrow({
   return (
     <p
       className={cn(
-        "text-xs font-semibold tracking-eyebrow uppercase",
-        tone === "inverse" ? "text-accent" : "text-accent",
+        "flex items-center gap-3 text-xs font-semibold tracking-eyebrow uppercase",
+        tone === "inverse" ? "text-brand-bright" : "text-brand",
         className,
       )}
     >
+      <span aria-hidden="true" className="h-0.5 w-7 bg-current" />
       {children}
     </p>
   );
@@ -35,6 +36,7 @@ interface SectionHeadingProps {
   className?: string;
 }
 
+/** Eyebrow, uppercase headline and optional lead. Wrap words in <Accent> to color them. */
 export function SectionHeading({
   id,
   eyebrow,
@@ -44,13 +46,13 @@ export function SectionHeading({
   className,
 }: SectionHeadingProps) {
   return (
-    <div className={cn("max-w-2xl", className)}>
+    <div className={cn("max-w-3xl", className)}>
       {eyebrow && <Eyebrow tone={tone}>{eyebrow}</Eyebrow>}
       <h2
         id={id}
         className={cn(
-          "mt-3 font-display text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl",
-          tone === "inverse" ? "text-canvas" : "text-ink",
+          "mt-5 font-display text-3xl leading-[1.05] font-bold tracking-tight uppercase sm:text-4xl lg:text-[2.75rem]",
+          tone === "inverse" ? "text-white" : "text-ink",
         )}
       >
         {title}
@@ -58,7 +60,7 @@ export function SectionHeading({
       {description && (
         <p
           className={cn(
-            "mt-4 text-base text-pretty sm:text-lg",
+            "mt-5 max-w-md text-base leading-relaxed text-pretty sm:text-lg",
             tone === "inverse" ? "text-on-brand-muted" : "text-ink-muted",
           )}
         >
@@ -66,5 +68,19 @@ export function SectionHeading({
         </p>
       )}
     </div>
+  );
+}
+
+export function Accent({
+  children,
+  tone = "default",
+}: {
+  children: ReactNode;
+  tone?: Tone;
+}) {
+  return (
+    <span className={tone === "inverse" ? "text-brand-bright" : "text-brand"}>
+      {children}
+    </span>
   );
 }

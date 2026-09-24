@@ -22,7 +22,7 @@ export function AdvisorProgress({
         className="mt-2 h-1 max-w-xs bg-subtle"
       >
         <div
-          className="h-full bg-accent"
+          className="h-full bg-brand transition-[width] duration-300 motion-reduce:transition-none"
           style={{ width: `${(current / total) * 100}%` }}
         />
       </div>

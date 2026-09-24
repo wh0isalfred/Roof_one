@@ -1,91 +1,58 @@
+import { Mail, Phone } from "lucide-react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { siteConfig } from "@/config/site";
 import { Logo } from "./Logo";
 
 export function SiteFooter() {
   return (
-    <footer className="bg-ink text-white py-16 lg:py-20">
+    <footer className="on-dark bg-ink text-white">
       <Container className="max-w-6xl">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          {/* Brand */}
+        <div className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr_1.2fr] lg:gap-8 lg:py-16">
           <div>
-            <Logo className="text-white mb-4" />
-            <p className="text-white/70 text-sm leading-relaxed">
-              Professional roofing solutions for homeowners.
-            </p>
+            <Logo />
+            <p className="mt-4 text-sm text-white/60">{siteConfig.tagline}</p>
           </div>
 
-          {/* Navigation */}
-          <div>
-            <h3 className="font-semibold mb-4">Navigation</h3>
-            <ul className="space-y-2 text-sm text-white/70">
-              <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#services"
-                  className="hover:text-white transition-colors"
-                >
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#projects"
-                  className="hover:text-white transition-colors"
-                >
-                  Projects
-                </Link>
-              </li>
+          <nav aria-label="Footer">
+            <ul className="grid gap-2.5 text-sm">
+              {siteConfig.nav.links.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-white/70 transition-colors hover:text-white"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
-          </div>
+          </nav>
 
-          {/* Contact */}
-          <div>
-            <h3 className="font-semibold mb-4">Contact</h3>
-            <ul className="space-y-2 text-sm text-white/70">
-              <li>
-                <a
-                  href="tel:+15551234567"
-                  className="hover:text-white transition-colors"
-                >
-                  +1 (555) 123-4567
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:info@roofone.com"
-                  className="hover:text-white transition-colors"
-                >
-                  info@roofone.com
-                </a>
-              </li>
-            </ul>
-          </div>
+          <ul className="grid content-start gap-3 text-sm">
+            <li>
+              <a
+                href={siteConfig.phone.href}
+                className="inline-flex items-center gap-3 text-white/70 transition-colors hover:text-white"
+              >
+                <Phone aria-hidden="true" className="size-4 text-brand-bright" />
+                {siteConfig.phone.display}
+              </a>
+            </li>
+            <li>
+              <a
+                href={siteConfig.email.href}
+                className="inline-flex items-center gap-3 text-white/70 transition-colors hover:text-white"
+              >
+                <Mail aria-hidden="true" className="size-4 text-brand-bright" />
+                {siteConfig.email.display}
+              </a>
+            </li>
+          </ul>
 
-          {/* Service Area */}
-          <div>
-            <h3 className="font-semibold mb-4">Service Area</h3>
-            <p className="text-sm text-white/70">
-              Greater New York Metro Area
-            </p>
-          </div>
-        </div>
-
-        {/* Bottom */}
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between text-sm text-white/60">
-          <p>&copy; 2024 Roof One. All rights reserved.</p>
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <Link href="#" className="hover:text-white transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="#" className="hover:text-white transition-colors">
-              Terms of Service
-            </Link>
-          </div>
+          <p className="text-sm text-white/50 lg:border-l lg:border-white/15 lg:pl-8">
+            &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+          </p>
         </div>
       </Container>
     </footer>

@@ -1,48 +1,58 @@
-"use client";
-
-import { useState } from "react";
-import Link from "next/link";
-import { ArrowRight, Phone } from "lucide-react";
+import { ArrowRight, Clock, LockKeyhole, ShieldCheck } from "lucide-react";
+import { AdvisorButton } from "@/components/roofing-advisor/AdvisorDialog";
+import { RoofPhoto } from "@/components/site/RoofPhoto";
 import { Container } from "@/components/ui/Container";
-import { RoofingAdvisorModal } from "@/components/roofing-advisor/RoofingAdvisorModal";
+import { Accent, SectionHeading } from "@/components/ui/SectionHeading";
+
+const REASSURANCES = [
+  { icon: ShieldCheck, lines: ["Quick", "& Easy"] },
+  { icon: Clock, lines: ["Takes Just", "A Few Minutes"] },
+  { icon: LockKeyhole, lines: ["Your Info", "Stays Private"] },
+] as const;
 
 export function FinalCtaSection() {
-  const [showAdvisor, setShowAdvisor] = useState(false);
-
   return (
-    <>
-      <section className="py-20 lg:py-28 bg-brand text-white">
-        <Container className="max-w-4xl text-center">
-          <h2 className="text-4xl lg:text-6xl font-semibold mb-8 leading-tight">
-            Ready to find out what your roof needs?
-          </h2>
-
-          <p className="text-lg lg:text-xl text-white/90 mb-12 max-w-2xl mx-auto">
-            Tell us what&apos;s happening and we&apos;ll help you figure out the next step.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => setShowAdvisor(true)}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-white font-semibold rounded-lg hover:bg-accent-strong transition-colors"
-            >
-              Get My Roof Assessment
-              <ArrowRight className="w-5 h-5" />
-            </button>
-            <Link
-              href="tel:+15551234567"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/20 text-white font-semibold rounded-lg hover:bg-white/30 transition-colors border border-white/30"
-            >
-              <Phone className="w-5 h-5" />
-              Call Us
-            </Link>
+    <section
+      id="assessment"
+      aria-labelledby="cta-title"
+      className="on-dark relative isolate scroll-mt-16 overflow-hidden bg-brand-strong text-white"
+    >
+      <RoofPhoto crop="object-[70%_20%] opacity-40" sizes="100vw" className="-z-10" />
+      <Container className="max-w-6xl">
+        <div className="grid gap-12 py-20 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-16 lg:py-24">
+          <div>
+            <SectionHeading
+              id="cta-title"
+              tone="inverse"
+              eyebrow="Ready to get started"
+              title={
+                <>
+                  Tell us what’s happening.
+                  <br />
+                  We’ll help with the <Accent tone="inverse">next step.</Accent>
+                </>
+              }
+            />
+            <AdvisorButton className="mt-9 inline-flex h-13 items-center gap-2 rounded-full bg-accent px-7 font-semibold text-white transition-colors hover:bg-accent-strong">
+              Start Assessment
+              <ArrowRight aria-hidden="true" className="size-4" />
+            </AdvisorButton>
           </div>
-        </Container>
-      </section>
 
-      {showAdvisor && (
-        <RoofingAdvisorModal onClose={() => setShowAdvisor(false)} />
-      )}
-    </>
+          <ul className="grid gap-6 sm:grid-cols-3 lg:grid-cols-1 lg:border-l lg:border-white/20 lg:pl-14">
+            {REASSURANCES.map(({ icon: Icon, lines }) => (
+              <li key={lines.join(" ")} className="flex items-center gap-4">
+                <Icon aria-hidden="true" strokeWidth={1.6} className="size-8 shrink-0" />
+                <p className="text-sm leading-snug font-medium">
+                  {lines[0]}
+                  <br />
+                  {lines[1]}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Container>
+    </section>
   );
 }
