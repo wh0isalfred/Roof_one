@@ -1,82 +1,85 @@
 "use client";
 
+import { ArrowRight } from "lucide-react";
 import { useState } from "react";
+import { RoofPhoto } from "@/components/site/RoofPhoto";
 import { Container } from "@/components/ui/Container";
+import { Accent, SectionHeading } from "@/components/ui/SectionHeading";
+import { cn } from "@/lib/cn";
 import { ServiceDetail } from "./ServiceDetail";
-
-const services = [
-  {
-    id: 1,
-    number: "01",
-    title: "Roof Repair",
-    description: "Fix leaks, missing shingles, and damage without full replacement.",
-    details: ["Leak detection and repair", "Shingle replacement", "Flashing repair", "Gutter maintenance"],
-  },
-  {
-    id: 2,
-    number: "02",
-    title: "Storm Damage",
-    description: "Swift assessment and restoration after severe weather.",
-    details: ["Insurance claim assistance", "Emergency tarping", "Full damage assessment", "Complete restoration"],
-  },
-  {
-    id: 3,
-    number: "03",
-    title: "Roof Replacement",
-    description: "Complete roof system replacement with quality materials.",
-    details: ["Material selection", "Professional installation", "Warranty coverage", "Long-term durability"],
-  },
-];
+import { SERVICES, type Service } from "./services";
 
 export function ServicesSection() {
-  const [selectedService, setSelectedService] = useState<typeof services[0] | null>(null);
+  const [selected, setSelected] = useState<Service | null>(null);
+  const [storm, repair, replacement] = SERVICES;
 
   return (
-    <>
-      <section id="services" className="py-20 lg:py-28 bg-white scroll-mt-20">
-        <Container className="max-w-6xl">
-          <div className="mb-16 lg:mb-20">
-            <h2 className="text-4xl lg:text-5xl font-semibold text-ink mb-6">
-              Services we offer
-            </h2>
-            <p className="text-lg text-ink-muted max-w-2xl">
-              From emergency repairs to complete replacements, we handle all aspects of residential roofing.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {services.map((service) => (
-              <button
-                key={service.id}
-                onClick={() => setSelectedService(service)}
-                className="group text-left p-8 bg-white border-2 border-line rounded-xl hover:border-brand hover:shadow-lg transition-all duration-300"
-              >
-                <div className="text-4xl font-bold text-brand-soft mb-4">
-                  {service.number}
-                </div>
-                <h3 className="text-2xl font-semibold text-ink mb-3 group-hover:text-brand transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-ink-muted leading-relaxed">
-                  {service.description}
-                </p>
-                <div className="mt-6 text-brand font-semibold text-sm flex items-center gap-2">
-                  Learn more
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </div>
-              </button>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Service Detail Modal */}
-      {selectedService && (
-        <ServiceDetail
-          service={selectedService}
-          onClose={() => setSelectedService(null)}
+    <section
+      id="services"
+      aria-labelledby="services-title"
+      className="scroll-mt-16 bg-surface py-20 lg:py-28"
+    >
+      <Container className="max-w-6xl">
+        <SectionHeading
+          id="services-title"
+          eyebrow="Our services"
+          className="max-w-5xl"
+          title={
+            <>
+              The right next step starts with knowing{" "}
+              <br className="hidden lg:block" />
+              <Accent>what your roof actually needs.</Accent>
+            </>
+          }
         />
+
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:mt-14 lg:gap-6">
+          <ServiceCard service={storm} onSelect={setSelected} />
+          <ServiceCard service={repair} onSelect={setSelected} />
+          <ServiceCard service={replacement} onSelect={setSelected} featured />
+        </div>
+      </Container>
+
+      <ServiceDetail service={selected} onClose={() => setSelected(null)} />
+    </section>
+  );
+}
+
+function ServiceCard({
+  service,
+  onSelect,
+  featured = false,
+}: {
+  service: Service;
+  onSelect: (service: Service) => void;
+  featured?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      aria-haspopup="dialog"
+      onClick={() => onSelect(service)}
+      className={cn(
+        "group on-dark relative isolate flex min-h-80 flex-col justify-end overflow-hidden rounded-md p-6 text-left text-white sm:p-8",
+        featured ? "sm:col-span-2 lg:min-h-[21rem]" : "lg:min-h-[21rem]",
       )}
-    </>
+    >
+      <RoofPhoto
+        crop={service.crop}
+        sizes={featured ? "(min-width: 1152px) 72rem, 100vw" : "(min-width: 640px) 50vw, 100vw"}
+        className="-z-10 transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
+      />
+      <h3 className="text-2xl font-bold tracking-tight uppercase sm:text-[1.7rem]">
+        {service.title}
+      </h3>
+      <p className="mt-3 max-w-sm leading-relaxed text-white/85">{service.summary}</p>
+      <span className="mt-6 inline-flex items-center gap-2 font-semibold text-brand-bright">
+        Explore
+        <ArrowRight
+          aria-hidden="true"
+          className="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none"
+        />
+      </span>
+    </button>
   );
 }

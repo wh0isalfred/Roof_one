@@ -24,7 +24,7 @@ export function AdvisorOption({
       className="flex h-full w-full items-start gap-4 rounded-md border border-line bg-surface p-4 text-left transition-colors hover:border-control aria-pressed:border-brand aria-pressed:bg-brand-soft sm:p-5"
     >
       {Icon && (
-        <Icon aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-accent" />
+        <Icon aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand" />
       )}
       <span className="min-w-0 flex-1">
         <span className="block font-semibold">{label}</span>

@@ -7,10 +7,15 @@ export interface NavLink {
 
 export interface SiteConfig {
   name: string;
+  tagline: string;
   description: string;
   phone: {
     display: string;
     href: `tel:${string}`;
+  };
+  email: {
+    display: string;
+    href: `mailto:${string}`;
   };
   nav: {
     links: readonly NavLink[];
@@ -21,6 +26,7 @@ export interface SiteConfig {
 export const siteConfig: SiteConfig = {
   // Placeholder brand name. Replace with the company's real name.
   name: "Roof One",
+  tagline: "Better roofs. Stronger homes.",
   description:
     "Roof repair, replacement, and inspections. Tell us what’s going on with your roof and our team will follow up.",
   // Placeholder from the reserved fictional 555-01xx range. Replace before launch.
@@ -28,14 +34,18 @@ export const siteConfig: SiteConfig = {
     display: "(555) 555-0100",
     href: "tel:+15555550100",
   },
+  // Placeholder on the reserved example.com domain. Replace before launch.
+  email: {
+    display: "hello@example.com",
+    href: "mailto:hello@example.com",
+  },
   nav: {
     links: [
       { label: "Home", href: "/" },
       { label: "Services", href: "/#services" },
-      { label: "How It Works", href: "/#how-it-works" },
-      { label: "Projects", href: "/#projects" },
-      { label: "FAQs", href: "/#faq" },
+      { label: "About", href: "/#why-roof-one" },
+      { label: "FAQs", href: "/faqs" },
     ],
-    cta: { label: "Get an Assessment", href: "/#assessment" },
+    cta: { label: "Get Assessment", href: "/#assessment" },
   },
 };

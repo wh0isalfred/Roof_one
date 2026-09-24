@@ -1,96 +1,102 @@
 "use client";
 
-import { useState } from "react";
-import { X, ArrowRight, Phone } from "lucide-react";
-import Link from "next/link";
-import { RoofingAdvisorModal } from "@/components/roofing-advisor/RoofingAdvisorModal";
+import { ArrowRight, Check, Phone, X } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { useOpenAdvisor } from "@/components/roofing-advisor/AdvisorDialog";
+import { RoofPhoto } from "@/components/site/RoofPhoto";
+import { siteConfig } from "@/config/site";
+import type { Service } from "./services";
 
-interface ServiceDetailProps {
-  service: {
-    id: number;
-    number: string;
-    title: string;
-    description: string;
-    details: string[];
-  };
+/** Details for one service, with a route into the Roofing Advisor. */
+export function ServiceDetail({
+  service,
+  onClose,
+}: {
+  service: Service | null;
   onClose: () => void;
-}
+}) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const openAdvisor = useOpenAdvisor();
 
-export function ServiceDetail({ service, onClose }: ServiceDetailProps) {
-  const [showAdvisor, setShowAdvisor] = useState(false);
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (service && dialog && !dialog.open) dialog.showModal();
+  }, [service]);
 
-  if (showAdvisor) {
-    return (
-      <RoofingAdvisorModal onClose={() => {
-        setShowAdvisor(false);
-        onClose();
-      }} />
-    );
-  }
+  const close = () => dialogRef.current?.close();
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-end lg:items-center justify-center p-4">
-      <div className="bg-white rounded-t-2xl lg:rounded-2xl w-full lg:w-full lg:max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl">
-        {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-line p-6 flex items-center justify-between">
-          <div className="flex-1">
-            <h2 className="text-2xl font-semibold text-ink">{service.title}</h2>
+    <dialog
+      ref={dialogRef}
+      aria-labelledby="service-detail-title"
+      onClose={onClose}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) close();
+      }}
+      className="dialog-panel on-light m-0 mt-auto max-h-[92dvh] w-full max-w-none overflow-y-auto rounded-t-lg bg-canvas text-ink sm:m-auto sm:w-[calc(100%-3rem)] sm:max-w-2xl sm:rounded-lg sm:shadow-overlay"
+    >
+      {service && (
+        <>
+          <div className="on-dark relative isolate flex h-44 items-end px-6 pb-6 text-white sm:h-52 sm:px-8">
+            <RoofPhoto crop={service.crop} sizes="(min-width: 640px) 42rem, 100vw" className="-z-10" />
+            <h2
+              id="service-detail-title"
+              className="text-3xl font-bold tracking-tight uppercase"
+            >
+              {service.title}
+            </h2>
+            <button
+              type="button"
+              onClick={close}
+              className="absolute top-3 right-3 flex size-11 items-center justify-center rounded-md transition-colors hover:bg-white/10"
+            >
+              <X aria-hidden="true" className="size-5" />
+              <span className="sr-only">Close</span>
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-subtle rounded-lg transition-colors"
-            aria-label="Close"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
 
-        {/* Content */}
-        <div className="p-6 lg:p-8">
-          <p className="text-lg text-ink-muted mb-8 leading-relaxed">
-            {service.description}
-          </p>
+          <div className="px-6 py-7 sm:px-8 sm:py-8">
+            <p className="text-lg leading-relaxed text-ink-muted">{service.summary}</p>
 
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold text-ink mb-4">What we help with:</h3>
-            <ul className="space-y-3">
-              {service.details.map((detail, idx) => (
-                <li key={idx} className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded-full bg-brand-soft flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <div className="w-2 h-2 rounded-full bg-brand" />
-                  </div>
-                  <span className="text-ink">{detail}</span>
+            <h3 className="mt-8 text-xs font-semibold tracking-eyebrow text-brand uppercase">
+              What we help with
+            </h3>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+              {service.helpsWith.map((item) => (
+                <li key={item} className="flex gap-3">
+                  <Check aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand" />
+                  <span>{item}</span>
                 </li>
               ))}
             </ul>
+
+            <div className="mt-8 border-t border-line pt-7">
+              <p className="font-semibold">Not sure what you need?</p>
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  aria-haspopup="dialog"
+                  onClick={() => {
+                    close();
+                    openAdvisor(service.issue);
+                  }}
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-brand px-6 font-semibold text-white transition-colors hover:bg-brand-strong"
+                >
+                  Talk to our Roofing Advisor
+                  <ArrowRight aria-hidden="true" className="size-4" />
+                </button>
+                <a
+                  href={siteConfig.phone.href}
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-control px-6 font-semibold transition-colors hover:bg-subtle"
+                >
+                  <Phone aria-hidden="true" className="size-4" />
+                  Call Us
+                </a>
+              </div>
+            </div>
           </div>
-
-          {/* Divider */}
-          <div className="my-8 border-t border-line" />
-
-          <p className="text-ink-muted mb-6">
-            Not sure what you need?
-          </p>
-
-          {/* CTAs */}
-          <div className="space-y-3">
-            <button
-              onClick={() => setShowAdvisor(true)}
-              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-brand text-white font-semibold rounded-lg hover:bg-brand-strong transition-colors"
-            >
-              Talk to our Roofing Advisor
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            <Link
-              href="tel:+15551234567"
-              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-subtle text-ink font-semibold rounded-lg hover:bg-line transition-colors"
-            >
-              <Phone className="w-4 h-4" />
-              Call Us
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
+        </>
+      )}
+    </dialog>
   );
 }

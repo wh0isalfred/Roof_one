@@ -20,6 +20,8 @@
   --color-brand-strong: #062B63; /* Deep Blue - authority and contrast */
   --color-brand-soft: #EEF5FF; /* Blue Surface - light variant */
   --color-on-brand-muted: #86B4E8; /* Light blue text on dark backgrounds */
+  --color-brand-bright: #4D8DFF; /* Blue accent text on dark photography and navy */
+  --color-brand-light: #DCEAFF; /* Light Blue - dividers and quiet fills on blue surfaces */
   --color-accent: #FF6B00; /* Action Orange - CTAs and accents */
   --color-accent-strong: #D45A00;
   --color-accent-soft: #FFF4E6;
@@ -107,18 +109,70 @@
   --focus-ring: var(--color-ink);
 }
 
-/* Custom animation for rotating badge text ring */
-@layer utilities {
-  @keyframes spin-slow {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
+/* Modal dialogs lock the page behind them. */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
+/* Fade and lift for native <dialog> panels. */
+@layer components {
+  .dialog-panel {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 220ms ease-out,
+      transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      overlay 260ms allow-discrete,
+      display 260ms allow-discrete;
+  }
+
+  .dialog-panel[open] {
+    opacity: 1;
+    transform: none;
+  }
+
+  @starting-style {
+    .dialog-panel[open] {
+      opacity: 0;
+      transform: translateY(16px);
     }
   }
 
-  .animate-spin-slow {
-    animation: spin-slow 20s linear infinite;
+  .dialog-panel::backdrop {
+    background-color: rgb(7 19 31 / 0);
+    transition:
+      background-color 260ms ease-out,
+      overlay 260ms allow-discrete,
+      display 260ms allow-discrete;
+  }
+
+  .dialog-panel[open]::backdrop {
+    background-color: rgb(7 19 31 / 0.7);
+  }
+
+  @starting-style {
+    .dialog-panel[open]::backdrop {
+      background-color: rgb(7 19 31 / 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dialog-panel,
+    .dialog-panel::backdrop {
+      transition: none;
+    }
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@keyframes hero-settle {
+  from {
+    transform: scale(1.12);
   }
 }

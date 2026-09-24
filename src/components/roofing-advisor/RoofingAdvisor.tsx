@@ -226,7 +226,7 @@ export function RoofingAdvisor({
   }
 
   return (
-    <div className="border border-line bg-surface">
+    <div>
       <div className="flex items-center justify-between gap-4 border-b border-line px-5 py-4 sm:px-8">
         <AdvisorProgress current={stepIndex + 1} total={steps.length} />
         <button
