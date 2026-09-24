@@ -47,7 +47,8 @@ function estimate(answers: Answers): readonly [number, number] | null {
     replacement: [8500, 14500],
     not_sure: [1000, 7000],
   };
-  const base = bases[answers.issue ?? "not_sure"] ?? bases.not_sure;
+  const base = bases[answers.issue ?? "not_sure"];
+  if (!base) return [1000, 7000];
   const [low, high] = base;
   const size = Number.parseInt(answers.size?.replace(/[^0-9]/g, "") ?? "", 10);
   const sizeFactor = Number.isFinite(size) && size > 0 ? Math.min(1.55, Math.max(0.8, size / 2000)) : 1;
