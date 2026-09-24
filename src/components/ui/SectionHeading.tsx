@@ -12,23 +12,31 @@ interface SectionHeadingProps {
   title: ReactNode;
   description?: ReactNode;
   tone?: Tone;
+  /** `large` is for the closing call to action only. */
+  size?: "default" | "large";
   className?: string;
 }
 
-/** Section headline and optional lead. Wrap words in <Accent> to color them. */
+/**
+ * Section title and optional lead. The heading carries the section on its
+ * own: no label above it, one colour, and a lead that stays quieter.
+ */
 export function SectionHeading({
   id,
   title,
   description,
   tone = "default",
+  size = "default",
   className,
 }: SectionHeadingProps) {
   return (
-    <div className={cn("max-w-2xl", className)}>
+    <div className={className}>
       <h2
         id={id}
         className={cn(
-          "font-headline text-[2rem] leading-[1.06] sm:text-[2.5rem] lg:text-[2.75rem]",
+          // An em-based measure keeps every title to one or two balanced lines.
+          "font-headline max-w-[17em]",
+          size === "large" ? "text-heading-lg" : "text-heading",
           tone === "inverse" ? "text-white" : "text-ink",
         )}
       >
@@ -37,28 +45,14 @@ export function SectionHeading({
       {description && (
         <p
           className={cn(
-            "mt-5 max-w-lg text-[1.0625rem] leading-relaxed",
-            tone === "inverse" ? "text-white/75" : "text-ink-muted",
+            "mt-6 max-w-xl text-lg leading-relaxed",
+            tone === "inverse" ? "text-white/85" : "text-ink-muted",
           )}
         >
           {description}
         </p>
       )}
     </div>
-  );
-}
-
-export function Accent({
-  children,
-  tone = "default",
-}: {
-  children: ReactNode;
-  tone?: Tone;
-}) {
-  return (
-    <span className={tone === "inverse" ? "text-brand-bright" : "text-brand"}>
-      {children}
-    </span>
   );
 }
 
@@ -73,8 +67,8 @@ export function MoreLink({
   tone?: Tone;
 }) {
   const className = cn(
-    "group mt-7 inline-flex items-center gap-2 font-semibold",
-    tone === "inverse" ? "text-brand-bright" : "text-accent",
+    "group mt-7 inline-flex items-center gap-2 font-semibold underline-offset-4 hover:underline",
+    tone === "inverse" ? "text-white" : "text-brand",
   );
   const content = (
     <>

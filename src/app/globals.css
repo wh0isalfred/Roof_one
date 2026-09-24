@@ -3,26 +3,26 @@
 /*
  * Design tokens.
  *
- * Premium roofing palette: Strong primary blue (#155EEF), deep authority blue (#062B63),
- * clean white, and selective orange (#FF6B00) for actions only.
+ * White, near black and one strong blue. Aim for roughly 70% white, 20% near
+ * black or deep blue, and 10% primary blue: primary blue marks actions,
+ * selections and a few deliberate blue fields, so it stays powerful.
  */
 @theme {
   --color-*: initial;
   --color-white: #FFFFFF;
-  --color-canvas: #FFFFFF; /* Main background */
-  --color-surface: #FAFBFC; /* Subtle raised surfaces */
-  --color-subtle: #F0F4F8; /* Quiet fills, hover states */
-  --color-line: #E5EAEF; /* Dividers and borders */
-  --color-control: #9CA3AF; /* Form control borders */
-  --color-ink: #07131F; /* Ink - primary text */
-  --color-ink-muted: #6B7280; /* Secondary text */
-  --color-brand: #155EEF; /* Primary Blue - brand energy */
-  --color-brand-strong: #062B63; /* Deep Blue - authority and contrast */
-  --color-brand-soft: #EEF5FF; /* Blue Surface - light variant */
-  --color-on-brand-muted: #86B4E8; /* Light blue text on dark backgrounds */
-  --color-brand-bright: #4D8DFF; /* Blue accent text on dark photography and navy */
-  --color-brand-light: #DCEAFF; /* Light Blue - dividers and quiet fills on blue surfaces */
-  --color-accent: #FF6B00; /* Action Orange - CTAs and accents */
+  --color-canvas: #FFFFFF; /* White: the main surface */
+  --color-surface: #F3F7FC; /* Cool surface: almost white, used sparingly */
+  --color-subtle: #E8EEF6; /* Hover and pressed fills on light surfaces */
+  --color-line: #DCE3EC; /* Dividers and borders */
+  --color-control: #8792A2; /* Form control borders, 3:1 on white */
+  --color-ink: #0A0D12; /* Near black: text and headings */
+  --color-ink-muted: #4A5362; /* Secondary text, 7.7:1 on white */
+  --color-brand: #0757C9; /* Primary blue: actions, selected states, blue fields */
+  --color-brand-hover: #0548AA; /* Primary blue under the pointer */
+  --color-brand-strong: #062B63; /* Deep blue: header, dark sections, footer */
+  --color-brand-soft: #E6EEFA; /* Primary blue tint for quiet fills */
+  --color-brand-bright: #6FA8FF; /* Lifted blue for deep blue surfaces only, never on white */
+  --color-accent: #FF6B00; /* Admin status signals only (new lead, high priority) */
   --color-accent-strong: #D45A00;
   --color-accent-soft: #FFF4E6;
   --color-success: #10B981;
@@ -34,13 +34,25 @@
   --radius-lg: 0.5rem;
 
   --shadow-*: initial;
-  --shadow-overlay: 0 16px 40px -16px rgb(30 32 35 / 0.35);
+  --shadow-overlay: 0 16px 40px -16px rgb(10 13 18 / 0.35);
 
+  /* Admin table headers only. The public site doesn't use eyebrow labels. */
   --tracking-eyebrow: 0.16em;
 
-  --text-display: clamp(2.75rem, 12vw, 7rem);
+  /*
+   * Type scale, used with font-headline. Display is the hero headline only,
+   * heading is every section title, heading-lg is the closing call to action.
+   * Body copy uses the default text-lg / text-base / text-sm steps.
+   *
+   * Display scales with its @container so the hero's set line breaks hold at
+   * every width: its longest line, "SECURE YOUR", is about 8.4em wide.
+   */
+  --text-display: min(4.5rem, 11.5cqi);
   --text-display--line-height: 0.92;
-  --text-display--letter-spacing: -0.02em;
+  --text-heading: clamp(2.125rem, 1.45rem + 2.5vw, 3.5rem);
+  --text-heading--line-height: 1.04;
+  --text-heading-lg: clamp(2.5rem, 1.4rem + 4.2vw, 4.75rem);
+  --text-heading-lg--line-height: 0.98;
 }
 
 /* Font families come from next/font variables set on <html> in the root layout. */
@@ -90,8 +102,8 @@
   }
 
   ::selection {
-    background-color: var(--color-accent-soft);
-    color: var(--color-ink);
+    background-color: var(--color-brand);
+    color: var(--color-white);
   }
 
   summary {
@@ -151,7 +163,7 @@ html:has(dialog[open]) {
   }
 
   .dialog-panel::backdrop {
-    background-color: rgb(7 19 31 / 0);
+    background-color: rgb(10 13 18 / 0);
     transition:
       background-color 260ms ease-out,
       overlay 260ms allow-discrete,
@@ -159,12 +171,12 @@ html:has(dialog[open]) {
   }
 
   .dialog-panel[open]::backdrop {
-    background-color: rgb(7 19 31 / 0.7);
+    background-color: rgb(10 13 18 / 0.7);
   }
 
   @starting-style {
     .dialog-panel[open]::backdrop {
-      background-color: rgb(7 19 31 / 0);
+      background-color: rgb(10 13 18 / 0);
     }
   }
 
@@ -186,5 +198,13 @@ html:has(dialog[open]) {
 @keyframes hero-settle {
   from {
     transform: scale(1.12);
+  }
+}
+
+/* Each assessment question arrives with a short fade and lift. */
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
   }
 }

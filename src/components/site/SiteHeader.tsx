@@ -1,16 +1,17 @@
 "use client";
 
-import { ArrowRight, Menu, Phone, X } from "lucide-react";
+import { Menu, Phone, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AdvisorButton } from "@/components/roofing-advisor/AdvisorDialog";
+import { ButtonArrow, buttonStyles } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { Logo } from "./Logo";
 
-/** Sits over the page's dark hero, then turns solid navy once the page scrolls. */
+/** Solid deep blue over every page. From lg up it tightens once the page scrolls. */
 export function SiteHeader() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -33,20 +34,15 @@ export function SiteHeader() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [menuOpen]);
 
-  const solid = scrolled || menuOpen;
+  const compact = scrolled || menuOpen;
 
   return (
-    <header
-      className={cn(
-        "on-dark fixed inset-x-0 top-0 z-40 text-white transition-[background-color,box-shadow] duration-300",
-        solid ? "bg-brand-strong shadow-overlay" : "bg-transparent",
-      )}
-    >
+    <header className="on-dark fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-brand-strong text-white">
       <Container className="max-w-6xl">
         <div
           className={cn(
-            "flex items-center justify-between gap-6 transition-[height] duration-300",
-            solid ? "h-16" : "h-20 lg:h-24",
+            "flex h-16 items-center justify-between gap-6 transition-[height] duration-300 motion-reduce:transition-none",
+            !compact && "lg:h-20",
           )}
         >
           <Logo />
@@ -77,9 +73,9 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <AdvisorButton className="hidden h-11 items-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-white transition-colors hover:bg-brand-bright sm:inline-flex">
+            <AdvisorButton className={buttonStyles({ className: "max-sm:hidden" })}>
               {cta.label}
-              <ArrowRight aria-hidden="true" className="size-4" />
+              <ButtonArrow />
             </AdvisorButton>
             <button
               type="button"
@@ -124,13 +120,14 @@ export function SiteHeader() {
           <div className="mt-5 grid gap-3 pb-2">
             <AdvisorButton
               onOpen={() => setMenuOpen(false)}
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-brand font-semibold text-white">
-              Get a roof assessment
-              <ArrowRight aria-hidden="true" className="size-4" />
+              className={buttonStyles({ size: "lg" })}
+            >
+              Start your assessment
+              <ButtonArrow />
             </AdvisorButton>
             <a
               href={siteConfig.phone.href}
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/30 font-semibold"
+              className={buttonStyles({ variant: "inverse-outline", size: "lg" })}
             >
               <Phone aria-hidden="true" className="size-4" />
               Call {siteConfig.phone.display}

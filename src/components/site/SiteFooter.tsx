@@ -8,12 +8,12 @@ import { SocialIcon } from "./SocialIcon";
 
 export function SiteFooter() {
   return (
-    <footer className="on-dark bg-ink text-white">
+    <footer className="on-dark bg-brand-strong text-white">
       <Container className="max-w-6xl">
-        <div className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.9fr_1.3fr_1.3fr] lg:gap-8 lg:py-12">
-          <div>
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 py-14 lg:grid-cols-[1.4fr_0.9fr_1.3fr_1.3fr] lg:gap-8 lg:py-12">
+          <div className="col-span-2 sm:col-span-1">
             <Logo />
-            <p className="mt-4 text-sm text-white/60">{siteConfig.tagline}</p>
+            <p className="mt-4 text-sm text-white/70">{siteConfig.tagline}</p>
           </div>
 
           <nav aria-label="Footer">
@@ -66,7 +66,7 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          <div className="text-sm text-white/50 lg:border-l lg:border-white/15 lg:pl-8">
+          <div className="col-span-2 text-sm text-white/65 sm:col-span-1 lg:border-l lg:border-white/15 lg:pl-8">
             <p>
               &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
             </p>

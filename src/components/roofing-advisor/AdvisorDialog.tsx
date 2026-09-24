@@ -10,6 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { LogoMark } from "@/components/site/Logo";
 import type { IssueType } from "@/lib/leads/options";
 import { RoofingAdvisor } from "./RoofingAdvisor";
 
@@ -30,9 +31,10 @@ interface Session {
 
 /**
  * Hosts the one Roofing Advisor dialog for the public site. Any CTA opens it
- * through `useOpenAdvisor` or `AdvisorButton`. Closing keeps answers in place,
- * so reopening continues where the visitor left off; opening with a different
- * issue starts a fresh assessment.
+ * through `useOpenAdvisor` or `AdvisorButton`. It takes over the whole screen
+ * so the assessment reads as its own guided tool, not a form on the page.
+ * Closing keeps answers in place, so reopening continues where the visitor
+ * left off; opening with a different issue starts a fresh assessment.
  */
 export function AdvisorProvider({ children }: { children: ReactNode }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -68,23 +70,28 @@ export function AdvisorProvider({ children }: { children: ReactNode }) {
         onClick={(event) => {
           if (event.target === event.currentTarget) close();
         }}
-        className="dialog-panel on-light m-0 h-dvh max-h-none w-full max-w-none overflow-hidden bg-canvas text-ink sm:m-auto sm:h-auto sm:max-h-[min(88dvh,56rem)] sm:w-[calc(100%-3rem)] sm:max-w-4xl sm:rounded-lg sm:shadow-overlay"
+        className="dialog-panel on-light m-0 h-dvh max-h-none w-full max-w-none overflow-hidden bg-canvas text-ink"
       >
-        <div className="flex h-full max-h-[inherit] flex-col">
-          <div className="flex items-center justify-between gap-4 bg-brand-strong px-5 py-4 text-white sm:px-8">
-            <h2 id="advisor-dialog-title" className="font-headline text-xl">
-              Roofing Advisor
-            </h2>
-            <button
-              type="button"
-              onClick={close}
-              className="on-dark flex size-11 items-center justify-center rounded-md text-white transition-colors hover:bg-white/10"
-            >
-              <X aria-hidden="true" className="size-5" />
-              <span className="sr-only">Close Roofing Advisor</span>
-            </button>
+        <div className="flex h-full flex-col">
+          <div className="on-dark shrink-0 bg-brand-strong text-white">
+            <div className="flex h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+              <div className="flex items-center gap-3">
+                <LogoMark />
+                <h2 id="advisor-dialog-title" className="font-headline text-lg">
+                  Roofing Advisor
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={close}
+                className="-mr-2 flex size-11 items-center justify-center rounded-md text-white transition-colors hover:bg-white/10"
+              >
+                <X aria-hidden="true" className="size-5" />
+                <span className="sr-only">Close Roofing Advisor</span>
+              </button>
+            </div>
           </div>
-          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+          <div className="min-h-0 flex-1">
             {session && (
               <RoofingAdvisor
                 key={session.key}

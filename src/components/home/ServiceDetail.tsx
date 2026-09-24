@@ -1,9 +1,10 @@
 "use client";
 
-import { ArrowRight, Check, Phone, X } from "lucide-react";
+import { Check, Phone, X } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useOpenAdvisor } from "@/components/roofing-advisor/AdvisorDialog";
 import { RoofPhoto } from "@/components/site/RoofPhoto";
+import { ButtonArrow, buttonStyles } from "@/components/ui/Button";
 import { siteConfig } from "@/config/site";
 import type { Service } from "./services";
 
@@ -33,7 +34,7 @@ export function ServiceDetail({
       onClick={(event) => {
         if (event.target === event.currentTarget) close();
       }}
-      className="dialog-panel on-light m-0 mt-auto max-h-[92dvh] w-full max-w-none overflow-y-auto rounded-t-lg bg-canvas text-ink sm:m-auto sm:w-[calc(100%-3rem)] sm:max-w-2xl sm:rounded-lg sm:shadow-overlay"
+      className="dialog-panel on-light m-0 mt-auto max-h-[92dvh] w-full max-w-none overflow-y-auto rounded-t-md bg-canvas text-ink sm:m-auto sm:w-[calc(100%-3rem)] sm:max-w-2xl sm:rounded-md sm:shadow-overlay"
     >
       {service && (
         <>
@@ -41,7 +42,7 @@ export function ServiceDetail({
             <RoofPhoto src={service.photo} crop={service.crop} sizes="(min-width: 640px) 42rem, 100vw" className="-z-10" />
             <h2
               id="service-detail-title"
-              className="font-headline text-3xl"
+              className="font-headline text-3xl sm:text-4xl"
             >
               {service.title}
             </h2>
@@ -58,7 +59,7 @@ export function ServiceDetail({
           <div className="px-6 py-7 sm:px-8 sm:py-8">
             <p className="text-lg leading-relaxed text-ink-muted">{service.summary}</p>
 
-            <h3 className="mt-8 font-semibold">What this covers</h3>
+            <h3 className="mt-8 text-lg font-semibold">What this covers</h3>
             <ul className="mt-4 grid gap-3 sm:grid-cols-2">
               {service.helpsWith.map((item) => (
                 <li key={item} className="flex gap-3">
@@ -79,14 +80,14 @@ export function ServiceDetail({
                     close();
                     openAdvisor(service.issue);
                   }}
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-brand px-6 font-semibold text-white transition-colors hover:bg-brand-strong"
+                  className={buttonStyles({ size: "lg" })}
                 >
-                  Get a roof assessment
-                  <ArrowRight aria-hidden="true" className="size-4" />
+                  Start your assessment
+                  <ButtonArrow />
                 </button>
                 <a
                   href={siteConfig.phone.href}
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-control px-6 font-semibold transition-colors hover:bg-subtle"
+                  className={buttonStyles({ variant: "outline", size: "lg" })}
                 >
                   <Phone aria-hidden="true" className="size-4" />
                   Call Us

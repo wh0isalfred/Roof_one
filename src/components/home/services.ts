@@ -12,8 +12,10 @@ export interface Service {
   /** Preselected in the Roofing Advisor when the visitor continues from this service. */
   issue: IssueType;
   photo: StaticImageData;
-  /** Tailwind framing for the photo; see RoofPhoto. */
+  /** Tailwind framing for the photo in the wide detail header; see RoofPhoto. */
   crop: string;
+  /** Tailwind framing for the photo in the tall homepage tile. */
+  tileCrop: string;
 }
 
 export const SERVICES: readonly Service[] = [
@@ -32,6 +34,7 @@ export const SERVICES: readonly Service[] = [
     issue: "storm_damage",
     photo: roofBefore,
     crop: "object-[45%_30%]",
+    tileCrop: "object-[12%_62%] scale-[1.35] origin-[20%_62%]",
   },
   {
     id: "roof-repair",
@@ -48,6 +51,7 @@ export const SERVICES: readonly Service[] = [
     issue: "repair",
     photo: heroPhoto,
     crop: "object-[44%_58%] scale-[2.2] origin-[44%_58%]",
+    tileCrop: "object-[28%_70%] scale-[1.3] origin-[28%_62%]",
   },
   {
     id: "roof-replacement",
@@ -64,6 +68,7 @@ export const SERVICES: readonly Service[] = [
     issue: "replacement",
     photo: roofAfter,
     crop: "object-[50%_35%]",
+    tileCrop: "object-[64%_40%]",
   },
   {
     id: "inspections",
@@ -80,5 +85,6 @@ export const SERVICES: readonly Service[] = [
     issue: "inspection",
     photo: roofTexture,
     crop: "object-center",
+    tileCrop: "object-[40%_50%]",
   },
 ];

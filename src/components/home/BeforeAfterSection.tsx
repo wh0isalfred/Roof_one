@@ -4,19 +4,20 @@ import { BeforeAfterSlider } from "./BeforeAfterSlider";
 
 export function BeforeAfterSection() {
   return (
-    <section id="projects" aria-labelledby="projects-title" className="scroll-mt-16 bg-canvas py-8">
+    <section
+      id="projects"
+      aria-labelledby="projects-title"
+      className="scroll-mt-16 bg-canvas pb-20 sm:pb-24 lg:pb-28"
+    >
       <Container className="max-w-6xl">
-        <div className="on-dark grid overflow-hidden rounded-lg bg-brand-strong text-white lg:grid-cols-[0.85fr_1.15fr]">
-          <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-12">
-            <SectionHeading
-              id="projects-title"
-              tone="inverse"
-              title="Same house. New roof."
-              description="Worn, patched shingles and a sagging gutter, replaced in full. Drag the slider to compare."
-            />
-          </div>
-          <BeforeAfterSlider />
+        <div className="grid gap-6 border-t border-line pt-20 sm:pt-24 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-end lg:gap-20 lg:pt-28">
+          <SectionHeading id="projects-title" title="Same house. New roof." />
+          <p className="max-w-lg text-lg leading-relaxed text-ink-muted">
+            Worn, patched shingles and a sagging gutter, replaced in full. Drag
+            the slider to compare.
+          </p>
         </div>
+        <BeforeAfterSlider className="mt-12 lg:mt-16" />
       </Container>
     </section>
   );

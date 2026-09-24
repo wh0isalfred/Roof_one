@@ -24,7 +24,7 @@ export function AdvisorLauncher() {
       )}
       inert={!visible}
     >
-      <AdvisorButton className="inline-flex h-12 items-center gap-2.5 rounded-full border border-brand-bright bg-brand-strong px-5 text-sm font-semibold text-white shadow-overlay transition-colors hover:bg-brand">
+      <AdvisorButton className="inline-flex h-12 items-center gap-2.5 rounded-md border border-white/20 bg-brand-strong px-5 text-sm font-semibold text-white shadow-overlay transition-colors hover:bg-brand">
         <MessageSquareText aria-hidden="true" className="size-4 text-brand-bright" />
         Roofing Advisor
       </AdvisorButton>

@@ -30,7 +30,7 @@ export function AdvisorUpload({
 
   return (
     <div>
-      <div className="rounded-md border border-dashed border-control bg-canvas px-5 py-8 text-center">
+      <div className="rounded-md border-2 border-dashed border-line bg-surface px-6 py-10 text-center">
         <input
           id={id}
           type="file"
@@ -44,8 +44,9 @@ export function AdvisorUpload({
           htmlFor={id}
           className={buttonStyles({
             variant: "outline",
+            size: "lg",
             className:
-              "cursor-pointer bg-surface peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ink peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
+              "cursor-pointer bg-canvas peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ink peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
           })}
         >
           <ImagePlus aria-hidden="true" className="size-4" />
