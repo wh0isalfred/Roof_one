@@ -70,10 +70,10 @@ export function AdvisorPreview() {
         <AdvisorMark className="mt-1 size-8" />
         <div className="grid gap-2 text-sm">
           <p className="rounded-lg rounded-tl-sm bg-brand-soft px-4 py-3">
-            Hi! Let’s figure out what’s happening with your roof.
+            What are you seeing?
           </p>
           <p className="w-fit rounded-lg bg-brand-soft px-4 py-3">
-            What’s the main issue you’re seeing?
+            Pick the closest one. You can add details next.
           </p>
         </div>
       </div>
@@ -103,12 +103,12 @@ export function AdvisorPreview() {
         onClick={() => openAdvisor(issue)}
         className="mt-5 inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-brand font-semibold text-white transition-colors hover:bg-brand-strong"
       >
-        Start assessment
+        Continue
         <ArrowRight aria-hidden="true" className="size-4" />
       </button>
       <p className="mt-3 flex items-center justify-center gap-2 text-xs text-ink-muted">
         <Clock aria-hidden="true" className="size-3.5" />
-        Takes about 2 minutes
+        About 2 minutes, no obligation
       </p>
     </div>
   );

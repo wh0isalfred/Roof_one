@@ -45,8 +45,8 @@
 
 /* Font families come from next/font variables set on <html> in the root layout. */
 @theme inline {
-  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
@@ -80,6 +80,10 @@
     text-wrap: balance;
   }
 
+  p {
+    text-wrap: pretty;
+  }
+
   :focus-visible {
     outline: 2px solid var(--focus-ring, var(--color-ink));
     outline-offset: 2px;
@@ -97,6 +101,14 @@
   summary::-webkit-details-marker {
     display: none;
   }
+}
+
+/* Headline voice: Archivo widened, heavy and tightly tracked. */
+@utility font-headline {
+  font-family: var(--font-display);
+  font-stretch: 116%;
+  font-weight: 700;
+  letter-spacing: -0.025em;
 }
 
 /* Apply to dark sections so focus rings stay visible. */

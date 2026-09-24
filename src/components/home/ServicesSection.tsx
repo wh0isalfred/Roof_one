@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ISSUE_ICONS } from "@/components/issue-icons";
+import { siteConfig } from "@/config/site";
 import { Container } from "@/components/ui/Container";
 import { MoreLink, SectionHeading } from "@/components/ui/SectionHeading";
 import { ServiceDetail } from "./ServiceDetail";
@@ -24,16 +25,10 @@ export function ServicesSection() {
           <div>
             <SectionHeading
               id="services-title"
-              eyebrow="Our services"
-              title={
-                <>
-                  Comprehensive Roofing
-                  <br className="hidden sm:block" /> Solutions for Every Need
-                </>
-              }
-              description="From minor repairs to complete replacements, we’ve got you covered with quality workmanship and lasting results."
+              title="What we work on"
+              description="Most calls are about one of these four. If yours isn’t, call anyway. We’ll tell you if it’s something we do."
             />
-            <MoreLink href="/#services">View All Services</MoreLink>
+            <MoreLink href={siteConfig.phone.href}>Call {siteConfig.phone.display}</MoreLink>
           </div>
 
           <ul className="grid grid-cols-2 gap-3 sm:gap-5">
@@ -48,10 +43,10 @@ export function ServicesSection() {
                     className="group h-full w-full rounded-lg border border-line bg-canvas p-4 text-left sm:p-6 transition-[border-color,box-shadow,translate] duration-300 hover:-translate-y-0.5 hover:border-brand-light hover:shadow-overlay motion-reduce:transition-none"
                   >
                     <Icon aria-hidden="true" strokeWidth={1.7} className="size-8 text-brand" />
-                    <h3 className="mt-5 font-semibold transition-colors group-hover:text-brand">
+                    <h3 className="mt-5 text-lg font-semibold transition-colors group-hover:text-brand">
                       {service.title}
                     </h3>
-                    <p className="mt-2 max-w-[13rem] text-sm leading-relaxed text-ink-muted">
+                    <p className="mt-2 text-sm leading-relaxed text-ink-muted">
                       {service.blurb}
                     </p>
                   </button>

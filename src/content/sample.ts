@@ -1,35 +1,40 @@
 /*
  * SAMPLE CONTENT — REPLACE BEFORE LAUNCH.
  *
- * Copied from the design reference at the owner's request. None of it is
- * confirmed: the customer count, service area, testimonials, ratings,
- * warranty answer and social links are placeholders. This file is a
+ * Placeholder claims kept at the owner's request. None of it is confirmed:
+ * the customer count, service area, testimonials, ratings, headshots
+ * (AI-generated), FAQ answers, social links and legal links. This file is a
  * deliberate, temporary exception to the "no unconfirmed claims" rule in
  * AGENTS.md; swap in real details (or remove the claims) before going live.
  */
+import {
+  avatar3,
+  avatar4,
+  avatarMike,
+  avatarSarah,
+} from "@/assets/photos";
 
 export const SAMPLE_PROOF = {
-  headline: "18k+ Satisfied Customers",
-  detail: "All Over New York",
-  initials: ["JR", "AL", "DK"],
+  headline: "18,000+ homeowners",
+  detail: "across New York",
+  photos: [avatarSarah, avatarMike, avatar3, avatar4],
 } as const;
-
-export const SAMPLE_REVIEWS_INTRO =
-  "Thousands of families have chosen Roof One for reliable service, quality work and peace of mind.";
 
 export const SAMPLE_REVIEWS = [
   {
     quote:
-      "The AI assessment was super easy and the team got back to me within hours. My roof looks amazing!",
+      "I sent photos of a ceiling stain on a Sunday night and had a call back Monday morning. They fixed the flashing and didn’t try to sell me a new roof.",
     name: "Sarah M.",
-    initials: "SM",
+    detail: "Leak repair",
+    photo: avatarSarah,
     rating: 5,
   },
   {
     quote:
-      "Professional, fast and reliable. They handled everything from inspection to repairs.",
+      "They showed me photos of every problem before giving a price. The crew finished in a day and left the driveway cleaner than they found it.",
     name: "Mike T.",
-    initials: "MT",
+    detail: "Roof replacement",
+    photo: avatarMike,
     rating: 5,
   },
 ] as const;
@@ -38,22 +43,22 @@ export const SAMPLE_FAQS = [
   {
     question: "How long does a roof replacement take?",
     answer:
-      "Most residential replacements take one to three days, depending on the size of the roof, the materials and the weather. We’ll give you a schedule before work starts.",
+      "Most houses take one to three days. Size, pitch, the material you choose and the weather all play a part. You’ll get a start date and a rough timeline with your estimate.",
   },
   {
     question: "Do you work with insurance claims?",
     answer:
-      "Yes. After storm damage we document what we find and can walk you through what your insurer will need.",
+      "Yes. After a storm we photograph and write up the damage so you have what your insurer asks for, and we can talk it through with your adjuster.",
   },
   {
-    question: "What types of roofing materials do you offer?",
+    question: "What roofing materials do you install?",
     answer:
-      "Asphalt shingles, metal, tile and flat-roof systems. We’ll recommend what suits your home, budget and climate.",
+      "Asphalt shingles, metal, tile and flat-roof systems. We’ll tell you what suits the house, the budget and how long you plan to stay.",
   },
   {
     question: "Is there a warranty on your work?",
     answer:
-      "Yes. Our workmanship is covered, and most materials carry a manufacturer warranty. We’ll go through the details with your estimate.",
+      "Our workmanship is covered, and most materials come with a manufacturer warranty. We’ll give you the details in writing with your estimate.",
   },
 ] as const;
 

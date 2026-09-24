@@ -1,3 +1,5 @@
+import type { StaticImageData } from "next/image";
+import { heroPhoto, roofAfter, roofBefore, roofTexture } from "@/assets/photos";
 import type { IssueType } from "@/lib/leads/options";
 
 export interface Service {
@@ -9,7 +11,8 @@ export interface Service {
   helpsWith: readonly string[];
   /** Preselected in the Roofing Advisor when the visitor continues from this service. */
   issue: IssueType;
-  /** Framing for the shared roof photo; see RoofPhoto. */
+  photo: StaticImageData;
+  /** Tailwind framing for the photo; see RoofPhoto. */
   crop: string;
 }
 
@@ -17,9 +20,9 @@ export const SERVICES: readonly Service[] = [
   {
     id: "storm-damage",
     title: "Storm Damage",
-    blurb: "Fast response for severe weather.",
+    blurb: "Wind, hail and fallen branches.",
     summary:
-      "After the storm, get the facts. We’ll assess the damage and guide your next steps.",
+      "From the ground it’s hard to tell what’s cosmetic and what will leak. We get up there, photograph what we find and tell you what needs fixing now.",
     helpsWith: [
       "Wind, hail and fallen-debris damage",
       "Temporary protection while repairs are planned",
@@ -27,14 +30,15 @@ export const SERVICES: readonly Service[] = [
       "Repair or replacement, depending on the damage",
     ],
     issue: "storm_damage",
-    crop: "object-[85%_15%] scale-[1.7] origin-[85%_15%]",
+    photo: roofBefore,
+    crop: "object-[45%_30%]",
   },
   {
     id: "roof-repair",
     title: "Roof Repair",
-    blurb: "Fixing issues early saves money.",
+    blurb: "Leaks, missing shingles, loose flashing.",
     summary:
-      "Fixing issues early can save you time, money and bigger problems later.",
+      "Most roofs don’t need replacing. They need one problem found and fixed. We trace where the water gets in and fix that.",
     helpsWith: [
       "Leaks and water stains",
       "Missing, cracked or lifted shingles",
@@ -42,14 +46,15 @@ export const SERVICES: readonly Service[] = [
       "Small problems before they spread",
     ],
     issue: "repair",
-    crop: "object-[44%_58%] scale-[2.6] origin-[44%_58%]",
+    photo: heroPhoto,
+    crop: "object-[44%_58%] scale-[2.2] origin-[44%_58%]",
   },
   {
     id: "roof-replacement",
     title: "Roof Replacement",
-    blurb: "Long-term protection and higher value.",
+    blurb: "For when patching stops making sense.",
     summary:
-      "A new roof means better protection, more value and long-term peace of mind.",
+      "Near the end of a roof’s life, repairs come more often and buy less time. We’ll tell you straight whether yours is there yet.",
     helpsWith: [
       "Roofs near the end of their life",
       "Choosing materials that suit your home",
@@ -57,14 +62,15 @@ export const SERVICES: readonly Service[] = [
       "A clear plan before any work starts",
     ],
     issue: "replacement",
-    crop: "object-[55%_35%]",
+    photo: roofAfter,
+    crop: "object-[50%_35%]",
   },
   {
     id: "inspections",
     title: "Inspections",
-    blurb: "Know your roof’s true condition.",
+    blurb: "Buying, selling, or just checking.",
     summary:
-      "A clear picture of your roof’s condition, so you can plan repairs before they become emergencies.",
+      "A full look at the roof, attic and gutters, with photos and a written summary of what’s fine, what to watch and what to fix.",
     helpsWith: [
       "Roof condition checks",
       "Pre-purchase and pre-sale inspections",
@@ -72,6 +78,7 @@ export const SERVICES: readonly Service[] = [
       "Photos and notes on what we find",
     ],
     issue: "inspection",
-    crop: "object-[30%_55%] scale-[1.9] origin-[30%_55%]",
+    photo: roofTexture,
+    crop: "object-center",
   },
 ];

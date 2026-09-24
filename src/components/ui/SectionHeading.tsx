@@ -6,55 +6,29 @@ import { cn } from "@/lib/cn";
 
 type Tone = "default" | "inverse";
 
-export function Eyebrow({
-  children,
-  tone = "default",
-  className,
-}: {
-  children: ReactNode;
-  tone?: Tone;
-  className?: string;
-}) {
-  return (
-    <p
-      className={cn(
-        "flex items-center gap-3 text-xs font-semibold tracking-eyebrow uppercase",
-        tone === "inverse" ? "text-brand-bright" : "text-brand",
-        className,
-      )}
-    >
-      <span aria-hidden="true" className="h-0.5 w-7 bg-current" />
-      {children}
-    </p>
-  );
-}
-
 interface SectionHeadingProps {
   /** Referenced by the section's aria-labelledby. */
   id: string;
-  eyebrow?: string;
   title: ReactNode;
   description?: ReactNode;
   tone?: Tone;
   className?: string;
 }
 
-/** Eyebrow, headline and optional lead. Wrap words in <Accent> to color them. */
+/** Section headline and optional lead. Wrap words in <Accent> to color them. */
 export function SectionHeading({
   id,
-  eyebrow,
   title,
   description,
   tone = "default",
   className,
 }: SectionHeadingProps) {
   return (
-    <div className={cn("max-w-3xl", className)}>
-      {eyebrow && <Eyebrow tone={tone}>{eyebrow}</Eyebrow>}
+    <div className={cn("max-w-2xl", className)}>
       <h2
         id={id}
         className={cn(
-          "mt-4 font-display text-3xl leading-[1.12] font-semibold tracking-tight sm:text-4xl lg:text-[2.6rem]",
+          "font-headline text-[2rem] leading-[1.06] sm:text-[2.5rem] lg:text-[2.75rem]",
           tone === "inverse" ? "text-white" : "text-ink",
         )}
       >
@@ -63,8 +37,8 @@ export function SectionHeading({
       {description && (
         <p
           className={cn(
-            "mt-5 max-w-lg text-base leading-relaxed text-pretty sm:text-lg",
-            tone === "inverse" ? "text-on-brand-muted" : "text-ink-muted",
+            "mt-5 max-w-lg text-[1.0625rem] leading-relaxed",
+            tone === "inverse" ? "text-white/75" : "text-ink-muted",
           )}
         >
           {description}
@@ -88,18 +62,36 @@ export function Accent({
   );
 }
 
-/** "View all →" style link under a section intro. */
-export function MoreLink({ href, children }: { href: Route; children: ReactNode }) {
-  return (
-    <Link
-      href={href}
-      className="group mt-7 inline-flex items-center gap-2 text-sm font-semibold text-brand"
-    >
+/** "Something →" link under a section intro. */
+export function MoreLink({
+  href,
+  children,
+  tone = "default",
+}: {
+  href: Route | `tel:${string}`;
+  children: ReactNode;
+  tone?: Tone;
+}) {
+  const className = cn(
+    "group mt-7 inline-flex items-center gap-2 font-semibold",
+    tone === "inverse" ? "text-brand-bright" : "text-brand",
+  );
+  const content = (
+    <>
       {children}
       <ArrowRight
         aria-hidden="true"
         className="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none"
       />
+    </>
+  );
+  return href.startsWith("tel:") ? (
+    <a href={href} className={className}>
+      {content}
+    </a>
+  ) : (
+    <Link href={href as Route} className={className}>
+      {content}
     </Link>
   );
 }
