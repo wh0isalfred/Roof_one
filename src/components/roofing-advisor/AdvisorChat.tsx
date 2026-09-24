@@ -38,7 +38,7 @@ function issueLabel(value?: IssueType) {
   return issues.find((item) => item.value === value)?.label ?? "Roofing project";
 }
 
-function estimate(answers: Answers) {
+function estimate(answers: Answers): readonly [number, number] | null {
   if (answers.issue === "inspection") return null;
   const bases: Record<string, [number, number]> = {
     leak: [650, 2800],
@@ -47,7 +47,8 @@ function estimate(answers: Answers) {
     replacement: [8500, 14500],
     not_sure: [1000, 7000],
   };
-  const [low, high] = bases[answers.issue ?? "not_sure"];
+  const base = bases[answers.issue ?? "not_sure"] ?? bases.not_sure;
+  const [low, high] = base;
   const size = Number.parseInt(answers.size?.replace(/[^0-9]/g, "") ?? "", 10);
   const sizeFactor = Number.isFinite(size) && size > 0 ? Math.min(1.55, Math.max(0.8, size / 2000)) : 1;
   const urgencyFactor = answers.urgency === "It's happening right now" ? 1.12 : 1;
@@ -74,11 +75,11 @@ function opening(initialIssue?: IssueType) {
       };
 }
 
-function question(stage: Stage, a: Answers) {
+function question(stage: Stage, a: Answers): readonly [Stage, string] {
   switch (stage) {
-    case "issue": return ["urgency" as Stage, "How urgent is the situation?"];
+    case "issue": return ["urgency", "How urgent is the situation?"];
     case "urgency":
-      return ["details" as Stage,
+      return ["details",
         a.issue === "replacement"
           ? "Tell me a little about the roof you're replacing. What made you decide it's time for a new one?"
           : a.issue === "storm_damage"
@@ -86,14 +87,14 @@ function question(stage: Stage, a: Answers) {
             : a.issue === "inspection"
               ? "What would you like us to look for during the inspection?"
               : "Tell me a little more about what you're seeing. Where is the problem and what have you noticed?"];
-    case "details": return ["roofAge" as Stage, "Do you know roughly how old the roof is?"];
-    case "roofAge": return ["size" as Stage, "About how large is the home? An approximate square footage is fine — if you're not sure, just say so."];
-    case "size": return ["material" as Stage, "What kind of roofing material do you have or want?"];
-    case "material": return ["name" as Stage, "Great. What's your name?"];
-    case "name": return ["phone" as Stage, `Thanks, ${a.name ?? "there"}. What's the best phone number to reach you?`];
-    case "phone": return ["email" as Stage, "And what email should we send the assessment details to?"];
-    case "email": return ["estimate" as Stage, "Perfect. I've got what I need. Let me put that together for you."];
-    default: return ["estimate" as Stage, "I've got what I need."];
+    case "details": return ["roofAge", "Do you know roughly how old the roof is?"];
+    case "roofAge": return ["size", "About how large is the home? An approximate square footage is fine — if you're not sure, just say so."];
+    case "size": return ["material", "What kind of roofing material do you have or want?"];
+    case "material": return ["name", "Great. What's your name?"];
+    case "name": return ["phone", `Thanks, ${a.name ?? "there"}. What's the best phone number to reach you?`];
+    case "phone": return ["email", "And what email should we send the assessment details to?"];
+    case "email": return ["estimate", "Perfect. I've got what I need. Let me put that together for you."];
+    default: return ["estimate", "I've got what I need."];
   }
 }
 
@@ -155,10 +156,11 @@ export function AdvisorChat({
 
     window.setTimeout(() => {
       const [nextStage, text] = question(stage, next);
+      const nextEstimate = nextStage === "estimate" ? estimate(next) : null;
       const finalText =
         nextStage === "estimate"
-          ? estimate(next)
-            ? `Based on what you've told me, your preliminary range is **${money(estimate(next)![0])} – ${money(estimate(next)![1])}**. That's a planning range, not a final quote — exact pricing depends on the measured roof, condition, materials and inspection.`
+          ? nextEstimate
+            ? `Based on what you've told me, your preliminary range is **${money(nextEstimate[0])} – ${money(nextEstimate[1])}**. That's a planning range, not a final quote — exact pricing depends on the measured roof, condition, materials and inspection.`
             : "Based on what you've told me, the right next step is an on-site inspection. I don't want to invent a price before someone has seen the roof."
           : text;
       setMessages((current) => [...current, { id: id + 1, role: "advisor", text: finalText }]);
