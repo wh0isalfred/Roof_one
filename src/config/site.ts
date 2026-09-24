@@ -26,7 +26,7 @@ export interface SiteConfig {
 export const siteConfig: SiteConfig = {
   // Placeholder brand name. Replace with the company's real name.
   name: "Roof One",
-  tagline: "Better roofs. Stronger homes.",
+  tagline: "Stronger roofs. Safer homes.",
   description:
     "Roof repair, replacement, and inspections. Tell us what’s going on with your roof and our team will follow up.",
   // Placeholder from the reserved fictional 555-01xx range. Replace before launch.
@@ -43,8 +43,9 @@ export const siteConfig: SiteConfig = {
     links: [
       { label: "Home", href: "/" },
       { label: "Services", href: "/#services" },
-      { label: "About", href: "/#why-roof-one" },
-      { label: "FAQs", href: "/faqs" },
+      { label: "Projects", href: "/#projects" },
+      { label: "About", href: "/#how-it-works" },
+      { label: "FAQs", href: "/#faq" },
     ],
     cta: { label: "Get Assessment", href: "/#assessment" },
   },
