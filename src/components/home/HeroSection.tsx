@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Phone } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { RoofingAdvisorModal } from "@/components/roofing-advisor/RoofingAdvisorModal";
+import Hero from "@/assets/heroImage.jpg";
 
 export function HeroSection() {
   const [showAdvisor, setShowAdvisor] = useState(false);
@@ -17,7 +18,7 @@ export function HeroSection() {
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: 'url(https://images.unsplash.com/photo-1541123603104-852fc1296b27?w=1400&q=80)',
+              backgroundImage: `url(${Hero})`,
               backgroundPosition: 'center 40%',
             }}
           />
